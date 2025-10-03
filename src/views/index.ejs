@@ -14,9 +14,12 @@
 
   <style>
     :root {
-      --primary: #16a34a; /* hijau */
-      --primary-700: #15803d; /* hover */
-      --secondary: #facc15; /* kuning */
+      --primary: #16a34a;
+      /* hijau */
+      --primary-700: #15803d;
+      /* hover */
+      --secondary: #facc15;
+      /* kuning */
       --ink: #0b1220;
       --paper: #ffffff;
       --paper-soft: #fffcf2;
@@ -36,33 +39,54 @@
       text-underline-offset: 6px;
       text-decoration-color: var(--secondary);
     }
+
     .card-hover {
       transition: transform .28s ease, box-shadow .28s ease;
     }
+
     .card-hover:hover {
       transform: translateY(-4px);
     }
+
     .card-media {
       position: relative;
       overflow: hidden;
     }
+
     .card-media::after {
       content: "";
-      position: absolute; inset: 0;
-      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, .45) 50%, transparent 100%);
       transform: translateX(-120%);
       transition: transform .7s ease;
       pointer-events: none;
     }
-    .group:hover .card-media::after { transform: translateX(120%); }
+
+    .group:hover .card-media::after {
+      transform: translateX(120%);
+    }
 
     /* Skip to content (aksesibilitas) */
     .skip-link {
-      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+      position: absolute;
+      left: -9999px;
+      top: auto;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
     }
+
     .skip-link:focus {
-      left: 1rem; top: 1rem; width: auto; height: auto; padding: .5rem .75rem;
-      background: var(--secondary); color: #111827; border-radius: .5rem; z-index: 1000;
+      left: 1rem;
+      top: 1rem;
+      width: auto;
+      height: auto;
+      padding: .5rem .75rem;
+      background: var(--secondary);
+      color: #111827;
+      border-radius: .5rem;
+      z-index: 1000;
     }
 
     @media (prefers-reduced-motion: no-preference) {
@@ -72,6 +96,7 @@
         transition: opacity .7s ease, transform .7s ease;
         will-change: opacity, transform;
       }
+
       .reveal.show {
         opacity: 1;
         transform: translateY(0);
@@ -98,12 +123,14 @@
         <a href="/" class="inline-flex items-center gap-2 group" aria-label="Beranda">
           <span class="inline-block h-8 w-1.5 rounded-full" style="background: var(--secondary)"></span>
           <span class="font-[Lobster] text-2xl leading-none text-gray-900">Lentera Zyland</span>
-          <span class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
+          <span
+            class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
         </a>
 
         <!-- Nav -->
         <nav class="hidden md:flex items-center gap-6">
-          <a href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Home</a>
+          <a href="/"
+            class="text-sm font-semibold text-gray-900 underline underline-offset-8 decoration-yellow-300">Home</a>
           <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a>
           <a href="/program" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Program</a>
           <a href="/download" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Download</a>
@@ -113,14 +140,15 @@
         <!-- CTA -->
         <div class="hidden md:flex items-center gap-3">
           <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
-             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
-             aria-label="Buka Instagram Lentera Zyland">
+            class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+            aria-label="Buka Instagram Lentera Zyland">
             <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
           </a>
         </div>
 
         <!-- Mobile menu button -->
-        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
+        <button id="menuBtn"
+          class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
           aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
           <i class="fas fa-bars"></i>
         </button>
@@ -130,13 +158,14 @@
     <!-- Mobile menu panel -->
     <div id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white/95 backdrop-blur">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
-        <a href="/" class="block py-2 text-gray-800 hover:text-gray-900">Home</a>
+        <a href="/"
+          class="block py-2 text-gray-800 hover:text-gray-900 font-semibold underline underline-offset-8 decoration-yellow-300">Home</a>
         <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a>
         <a href="/program" class="block py-2 text-gray-800 hover:text-gray-900">Program</a>
         <a href="/download" class="block py-2 text-gray-800 hover:text-gray-900">Download</a>
         <a href="/tentang" class="block py-2 text-gray-800 hover:text-gray-900">Tentang</a>
         <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
-           class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
+          class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
           <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
         </a>
       </div>
@@ -165,7 +194,8 @@
                 class="group inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-2.5 rounded-xl shadow-sm hover:shadow transition"
                 style="background: var(--primary);">
                 Jelajahi Program
-                <i class="fas fa-arrow-right text-xs opacity-90 transform transition-transform group-hover:translate-x-0.5"></i>
+                <i
+                  class="fas fa-arrow-right text-xs opacity-90 transform transition-transform group-hover:translate-x-0.5"></i>
               </a>
               <a href="/berita"
                 class="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition">
@@ -191,7 +221,8 @@
           </div>
 
           <div class="reveal relative">
-            <div class="rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-3 shadow-sm card-hover">
+            <div
+              class="rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-3 shadow-sm card-hover">
               <img src="img/gambar.jpg" alt="Ilustrasi kegiatan Lentera Zyland"
                 class="rounded-xl object-cover w-full h-64 sm:h-80" loading="eager" />
             </div>
@@ -217,7 +248,8 @@
 
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           <!-- Fun LENTERA -->
-          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+          <article
+            class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
             <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
               <i class="fas fa-gamepad text-yellow-600 transform transition-transform group-hover:scale-110"></i>
             </div>
@@ -227,7 +259,8 @@
           </article>
 
           <!-- LENTERA Focus -->
-          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+          <article
+            class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
             <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
               <i class="fas fa-bullseye text-yellow-600 transform transition-transform group-hover:scale-110"></i>
             </div>
@@ -237,9 +270,11 @@
           </article>
 
           <!-- Zylearn -->
-          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+          <article
+            class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
             <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
-              <i class="fas fa-chalkboard-teacher text-yellow-600 transform transition-transform group-hover:scale-110"></i>
+              <i
+                class="fas fa-chalkboard-teacher text-yellow-600 transform transition-transform group-hover:scale-110"></i>
             </div>
             <h3 class="font-semibold text-gray-900">Zylearn</h3>
             <p class="mt-2 text-sm text-gray-600">Lokakarya untuk guru & orang tua agar praktik berlanjut di rumah dan
@@ -247,7 +282,8 @@
           </article>
 
           <!-- LENTERA Competition -->
-          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+          <article
+            class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
             <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
               <i class="fas fa-trophy text-yellow-600 transform transition-transform group-hover:scale-110"></i>
             </div>
@@ -273,11 +309,13 @@
 
         <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- Kartu berita -->
-          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+          <article
+            class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
             <a href="/berita/rilis-zymath-ar-120">
               <div class="card-media h-40">
                 <img src="img/gambar.jpg" alt="Rilis Zymath AR"
-                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy" />
               </div>
             </a>
             <div class="p-5">
@@ -287,16 +325,19 @@
               </h3>
               <p class="mt-2 text-sm text-gray-600">Tracking lebih stabil dan aset 3D lebih ringan.</p>
               <div class="mt-3 flex items-center gap-2">
-                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Rilis</span>
+                <span
+                  class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Rilis</span>
               </div>
             </div>
           </article>
 
-          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+          <article
+            class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
             <a href="/berita/workshop-zylearn">
               <div class="card-media h-40">
                 <img src="img/gambar.jpg" alt="Workshop Zylearn"
-                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy" />
               </div>
             </a>
             <div class="p-5">
@@ -306,16 +347,19 @@
               </h3>
               <p class="mt-2 text-sm text-gray-600">Penguatan praktik di kelas dan di rumah.</p>
               <div class="mt-3 flex items-center gap-2">
-                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Pelatihan</span>
+                <span
+                  class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Pelatihan</span>
               </div>
             </div>
           </article>
 
-          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+          <article
+            class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
             <a href="/berita/fun-lentera-sd-mitra">
               <div class="card-media h-40">
                 <img src="img/gambar.jpg" alt="Kegiatan Fun LENTERA"
-                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  loading="lazy" />
               </div>
             </a>
             <div class="p-5">
@@ -325,7 +369,8 @@
               </h3>
               <p class="mt-2 text-sm text-gray-600">Belajar numerasi dengan permainan kolaboratif.</p>
               <div class="mt-3 flex items-center gap-2">
-                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Kegiatan</span>
+                <span
+                  class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Kegiatan</span>
               </div>
             </div>
           </article>
@@ -348,12 +393,14 @@
             class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col card-hover">
             <div class="card-media h-56">
               <img src="img/gambar.jpg" alt="Tangkapan layar Zymath AR"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                loading="lazy">
             </div>
             <div class="p-5 flex-1 flex flex-col">
               <div class="flex items-center justify-between">
                 <h3 class="font-semibold text-gray-900 text-lg">Zymath AR</h3>
-                <span class="text-xs px-2 py-1 rounded-md text-gray-900" style="background: var(--secondary);">Android</span>
+                <span class="text-xs px-2 py-1 rounded-md text-gray-900"
+                  style="background: var(--secondary);">Android</span>
               </div>
               <p class="mt-2 text-sm text-gray-600">Pembelajaran berbasis Augmented Reality untuk literasi & numerasi.
               </p>
@@ -376,12 +423,14 @@
             class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col card-hover">
             <div class="card-media h-56">
               <img src="img/gambar.jpg" alt="Tangkapan layar Zyland"
-                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy">
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                loading="lazy">
             </div>
             <div class="p-5 flex-1 flex flex-col">
               <div class="flex items-center justify-between">
                 <h3 class="font-semibold text-gray-900 text-lg">Zyland</h3>
-                <span class="text-xs px-2 py-1 rounded-md text-gray-900" style="background: var(--secondary);">Windows/PC</span>
+                <span class="text-xs px-2 py-1 rounded-md text-gray-900"
+                  style="background: var(--secondary);">Windows/PC</span>
               </div>
               <p class="mt-2 text-sm text-gray-600">Game edukasi untuk literasi & numerasi melalui <strong>Computational
                   Thinking</strong>.</p>
@@ -413,28 +462,38 @@
         </div>
 
         <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
-            <img src="img/gambar.jpg" alt="Vio Arvendha" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+          <div
+            class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Vio Arvendha" class="w-20 h-20 rounded-full object-cover mx-auto"
+              loading="lazy" />
             <h3 class="mt-3 font-semibold text-gray-900">Vio Arvendha</h3>
             <p class="text-sm text-gray-600">Ketua Tim</p>
           </div>
-          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
-            <img src="img/gambar.jpg" alt="Rahadatul Aisy Tsamarah Ilyas" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+          <div
+            class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Rahadatul Aisy Tsamarah Ilyas"
+              class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy" />
             <h3 class="mt-3 font-semibold text-gray-900">Rahadatul Aisy T. I.</h3>
             <p class="text-sm text-gray-600">Anggota</p>
           </div>
-          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
-            <img src="img/gambar.jpg" alt="Suryani Elmaghfiroh" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+          <div
+            class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Suryani Elmaghfiroh" class="w-20 h-20 rounded-full object-cover mx-auto"
+              loading="lazy" />
             <h3 class="mt-3 font-semibold text-gray-900">Suryani Elmaghfiroh</h3>
             <p class="text-sm text-gray-600">Anggota</p>
           </div>
-          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
-            <img src="img/gambar.jpg" alt="Ryani Dewi Nuraini" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+          <div
+            class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Ryani Dewi Nuraini" class="w-20 h-20 rounded-full object-cover mx-auto"
+              loading="lazy" />
             <h3 class="mt-3 font-semibold text-gray-900">Ryani Dewi Nuraini</h3>
             <p class="text-sm text-gray-600">Anggota</p>
           </div>
-          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
-            <img src="img/gambar.jpg" alt="Dhandy Hananthiyo Ardhy Putra" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+          <div
+            class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Dhandy Hananthiyo Ardhy Putra"
+              class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy" />
             <h3 class="mt-3 font-semibold text-gray-900">Dhandy H. A. Putra</h3>
             <p class="text-sm text-gray-600">Anggota</p>
           </div>
@@ -445,9 +504,9 @@
 
   <!-- Back to top -->
   <button id="toTop" class="fixed bottom-6 right-6 opacity-0 pointer-events-none transition focus:outline-none"
-          aria-label="Kembali ke atas">
+    aria-label="Kembali ke atas">
     <span class="inline-flex items-center justify-center w-11 h-11 rounded-full shadow-sm hover:shadow"
-          style="background: var(--primary); color: white;">
+      style="background: var(--primary); color: white;">
       <i class="fas fa-arrow-up"></i>
     </span>
   </button>
@@ -569,4 +628,5 @@
     toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   </script>
 </body>
+
 </html>
