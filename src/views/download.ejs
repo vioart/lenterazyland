@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Unduh Zymath AR (Android) dan Zyland (Windows/PC) dari Lentera Zyland."/>
+  <title>Download • Lentera Zyland</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+
+  <link rel="icon" href="/img/icon.png" type="image/png" />
+
+  <style>
+    :root{
+      --primary:#16a34a;
+      --secondary:#facc15;
+      --ink:#0b1220;
+      --paper:#ffffff;
+
+      /* aksen dinamis per platform */
+      --accent:#10b981;   /* Android */
+      --accent-700:#059669;
+      --accent-soft: rgba(16,185,129,.08);
+      --accent-ring: rgba(16,185,129,.35);
+    }
+
+    /* ==== OVERFLOW SAFEGUARDS (fix mobile horizontal scroll) ==== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ width:100%; max-width:100%; overflow-x:hidden; }
+    header,main,footer{ width:100%; overflow-x:hidden; }
+
+    body{ font-family:'Poppins',sans-serif; color:var(--ink); background:var(--paper); }
+
+    /* hero mesh/blobs */
+    .hero-wrap{
+      position:relative; isolation:isolate;
+      background:
+        radial-gradient(1200px 500px at 80% -10%, var(--accent-soft), transparent 60%),
+        radial-gradient(700px 400px at 10% 110%, rgba(250,204,21,.18), transparent 60%);
+      /* penting: clip dekorasi supaya nggak nambah lebar layar */
+      overflow:hidden;
+    }
+    .hero-blob{
+      position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden;
+    }
+    .hero-blob::before,
+    .hero-blob::after{
+      content:""; position:absolute; border-radius:9999px; filter: blur(70px);
+      opacity:.55;
+    }
+    .hero-blob::before{ width:320px; height:320px; left:-40px; top:-40px; background:var(--secondary); }
+    .hero-blob::after { width:380px; height:380px; right:-60px; bottom:-80px; background:var(--accent); }
+
+    /* glass card */
+    .glass {
+      background: rgba(255,255,255,.6);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,0,0,.06);
+      box-shadow: 0 10px 25px rgba(0,0,0,.06);
+    }
+    .ring-accent { box-shadow: 0 0 0 6px var(--accent-ring); }
+
+    /* segmented control */
+    .seg-btn{ border:1px solid rgba(0,0,0,.08); }
+    .seg-btn[aria-pressed="true"]{
+      background: var(--accent);
+      color:#fff;
+      border-color: transparent;
+    }
+
+    /* timeline */
+    .tl{ position:relative; }
+    .tl::before{
+      content:""; position:absolute; top:0; left:18px; bottom:0;
+      width:2px; background:linear-gradient(to bottom, var(--accent), transparent);
+      opacity:.35;
+    }
+    .tl-item{ position:relative; padding-left:48px; }
+    .tl-item::before{
+      content:""; position:absolute; left:10px; top:.6rem; width:16px; height:16px; border-radius:9999px;
+      background:var(--accent); box-shadow:0 0 0 4px var(--accent-soft);
+    }
+
+    /* hover micro-interactions */
+    .card-hover{ transition: transform .28s ease, box-shadow .28s ease; }
+    .card-hover:hover{ transform: translateY(-4px); }
+
+    /* hide scrollbar horizontally if needed */
+    .hide-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    .hide-scrollbar::-webkit-scrollbar{ display:none; }
+
+    @media (prefers-reduced-motion:no-preference){
+      .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+      .reveal.show{ opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+<body class="antialiased text-gray-800 selection:bg-yellow-200 selection:text-gray-900 overflow-x-hidden">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Branding -->
+        <a href="/" class="inline-flex items-center gap-2 group" aria-label="Beranda">
+          <span class="inline-block h-8 w-1.5 rounded-full" style="background:var(--secondary)"></span>
+          <span class="font-[Lobster] text-2xl leading-none text-gray-900">Lentera Zyland</span>
+          <span class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Home</a>
+          <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a>
+          <a href="/program" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Program</a>
+          <a href="/download" class="text-sm font-semibold text-gray-900 underline underline-offset-8 decoration-yellow-300">Download</a>
+          <a href="/tentang" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Tentang</a>
+        </nav>
+
+        <!-- CTA -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+             aria-label="Buka Instagram Lentera Zyland">
+            <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+          </a>
+        </div>
+
+        <!-- Mobile menu -->
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
+                aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile panel -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white/95 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
+        <a href="/" class="block py-2 text-gray-800 hover:text-gray-900">Home</a>
+        <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a>
+        <a href="/program" class="block py-2 text-gray-800 hover:text-gray-900">Program</a>
+        <a href="/download" class="block py-2 text-gray-800 hover:text-gray-900 font-semibold underline underline-offset-8 decoration-yellow-300">Download</a>
+        <a href="/tentang" class="block py-2 text-gray-800 hover:text-gray-900">Tentang</a>
+        <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
+          <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main class="hero-wrap">
+    <div class="hero-blob"></div>
+
+    <!-- Hero + Platform Switch -->
+    <section class="pt-10 sm:pt-14 pb-4">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal show flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full"
+                  style="background: var(--accent-soft); color: var(--accent); border:1px solid var(--accent-ring);">
+              <i class="fas fa-bolt"></i> Rilis & Unduhan
+            </span>
+            <h1 class="mt-3 text-2xl sm:text-3xl font-extrabold text-gray-900">Download</h1>
+            <p class="mt-1 text-gray-700 max-w-2xl">
+              Unduh <strong>Zymath AR</strong> (Android) dan <strong>Zyland</strong> (Windows/PC). Seluruh produk kami selaras dengan
+              prinsip <strong>Computational Thinking</strong> dalam desain aktivitasnya.
+            </p>
+          </div>
+
+          <!-- Segmented control (platform) -->
+          <div class="w-full lg:w-auto">
+            <div class="inline-flex rounded-xl overflow-hidden bg-white/70 glass seg-btn-group">
+              <button id="seg-android" class="seg-btn px-4 py-2 text-sm font-semibold inline-flex items-center gap-2"
+                      aria-pressed="true" data-platform="Android">
+                <i class="fab fa-android"></i> Android
+              </button>
+              <button id="seg-windows" class="seg-btn px-4 py-2 text-sm font-semibold inline-flex items-center gap-2"
+                      aria-pressed="false" data-platform="Windows">
+                <i class="fab fa-windows"></i> Windows
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Search inside timeline (compact) -->
+        <div class="mt-6">
+          <div class="relative w-full sm:w-96">
+            <input id="search" type="text" placeholder="Cari rilis (mis. 1.2, patch, demo)..."
+                   class="w-full rounded-xl border border-gray-200 px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-200">
+            <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Showcase + Timeline -->
+    <section class="pb-12 sm:pb-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          <!-- Latest (big) -->
+          <div class="lg:col-span-6 xl:col-span-7">
+            <article id="latestCard" class="glass rounded-3xl overflow-hidden card-hover ring-accent">
+              <div class="grid grid-cols-1 md:grid-cols-5">
+                <div class="md:col-span-3 p-6 sm:p-8">
+                  <div class="flex items-center gap-2">
+                    <span id="latestPlatformBadge"
+                          class="text-[11px] px-2 py-1 rounded-full"
+                          style="background: var(--accent-soft); color: var(--accent); border:1px solid var(--accent-ring);">
+                      Platform
+                    </span>
+                    <span id="latestDate" class="text-xs text-gray-500">—</span>
+                  </div>
+
+                  <h2 id="latestTitle" class="mt-2 text-2xl font-extrabold text-gray-900">—</h2>
+                  <p id="latestExcerpt" class="mt-2 text-sm text-gray-700">—</p>
+
+                  <ul id="latestSpecs" class="mt-4 space-y-2 text-sm text-gray-700"></ul>
+
+                  <div class="mt-5 flex flex-wrap gap-2">
+                    <a id="latestHref"
+                       class="inline-flex items-center gap-2 text-sm font-semibold text-white px-4 py-2.5 rounded-xl shadow-sm hover:shadow transition"
+                       style="background: var(--accent);">
+                      <i class="fas fa-download text-xs opacity-90"></i> Download
+                    </a>
+                    <button id="copyLatest" class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2.5 rounded-xl border border-gray-200 hover:bg-white transition">
+                      <i class="far fa-clipboard text-xs opacity-90"></i> Salin link
+                    </button>
+                  </div>
+                </div>
+
+                <div class="md:col-span-2 relative">
+                  <div class="h-56 sm:h-full">
+                    <img id="latestImage" src="/img/gambar.jpg" alt="Preview" class="w-full h-full object-cover"/>
+                  </div>
+                  <!-- dekor atas-kanan (tetap di-clip oleh overflow-hidden artikel) -->
+                  <div class="absolute -top-3 -right-3 w-20 h-20 rounded-3xl" style="background: var(--secondary); filter: blur(30px); opacity:.55"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <!-- Timeline (releases) -->
+          <div class="lg:col-span-6 xl:col-span-5">
+            <div class="glass rounded-3xl p-6 sm:p-7">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-bold text-gray-900">Riwayat Rilis</h3>
+                <select id="sort" class="rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-200">
+                  <option value="newest">Terbaru</option>
+                  <option value="oldest">Terlama</option>
+                </select>
+              </div>
+
+              <div class="mt-5 tl" id="timeline"></div>
+
+              <div id="empty" class="hidden mt-8 text-center text-gray-500">
+                <i class="fas fa-download text-2xl mb-2 opacity-70"></i>
+                <p>Tidak ada rilis yang cocok.</p>
+              </div>
+            </div>
+
+            <!-- Tips -->
+            <div class="mt-6 grid sm:grid-cols-2 gap-4">
+              <div class="glass rounded-2xl p-4">
+                <div class="flex items-center gap-2 text-sm font-semibold" style="color:var(--accent);">
+                  <i class="fas fa-shield-alt"></i> Keamanan instal
+                </div>
+                <p class="mt-2 text-sm text-gray-600">
+                  Android: izinkan instal dari sumber tidak dikenal bila diminta. Windows: jika SmartScreen muncul, pilih <em>More info</em> → <em>Run anyway</em>.
+                </p>
+              </div>
+              <div class="glass rounded-2xl p-4">
+                <div class="flex items-center gap-2 text-sm font-semibold" style="color:var(--accent);">
+                  <i class="fas fa-lightbulb"></i> Selaras CT
+                </div>
+                <p class="mt-2 text-sm text-gray-600">
+                  Aktivitas di aplikasi/game kami menekankan dekomposisi, pola, abstraksi, dan perancangan algoritma.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 px-4 py-2 rounded-lg text-sm text-white shadow hidden"
+       style="background: var(--accent);">Tautan disalin</div>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-100 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div class="reveal show">
+          <h3 class="font-semibold text-gray-900">Lentera Zyland</h3>
+          <p class="mt-2 text-sm text-gray-600">Inovasi pembelajaran inklusif melalui game edukasi berlandaskan Computational Thinking</p>
+          <div class="mt-3 flex items-center gap-3 text-gray-500">
+            <a href="#" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="reveal show">
+          <h4 class="font-semibold text-gray-900">Navigasi</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li><a href="/" class="hover:text-gray-900">Home</a></li>
+            <li><a href="/berita" class="hover:text-gray-900">Berita</a></li>
+            <li><a href="/program" class="hover:text-gray-900">Program</a></li>
+            <li><a href="/download" class="hover:text-gray-900">Download</a></li>
+            <li><a href="/tentang" class="hover:text-gray-900">Tentang</a></li>
+          </ul>
+        </div>
+        <div class="reveal show">
+          <h4 class="font-semibold text-gray-900">Kontak</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li>Email: <a href="mailto:lenterazyland1@gmail.com" class="underline">lenterazyland1@gmail.com</a></li>
+            <li>Alamat: Surakarta</li>
+          </ul>
+        </div>
+      </div>
+      <div class="py-4 border-t border-gray-100 text-xs text-gray-500 flex items-center justify-between">
+        <span>© <span id="year"></span> Lentera Zyland • All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Tahun footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(menuBtn){
+      menuBtn.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // ===== Data rilis =====
+    const DATA = {
+      Android: [
+        {
+          id:"zymath-1-2-0",
+          name:"Zymath AR",
+          version:"1.2.0",
+          platform:"Android",
+          size:"72 MB",
+          req:"MinSDK 24",
+          date:"2025-09-28",
+          notes:["Tracking lebih stabil","Aset 3D lebih ringan","Optimasi kinerja"],
+          image:"/img/gambar.jpg",
+          href:"assets/apk/zymath-ar-1.2.0.apk",
+          excerpt:"Rilis stabil dengan peningkatan tracking & performa."
+        },
+        {
+          id:"zymath-1-1-0",
+          name:"Zymath AR",
+          version:"1.1.0",
+          platform:"Android",
+          size:"70 MB",
+          req:"MinSDK 24",
+          date:"2025-08-15",
+          notes:["Perbaikan bug minor","Optimasi ukuran paket"],
+          image:"/img/gambar.jpg",
+          href:"assets/apk/zymath-ar-1.1.0.apk",
+          excerpt:"Peningkatan kompatibilitas perangkat."
+        }
+      ],
+      Windows: [
+        {
+          id:"zyland-1-0-0",
+          name:"Zyland",
+          version:"1.0.0",
+          platform:"Windows",
+          size:"~120 MB (ZIP)",
+          req:"Windows x64",
+          date:"2025-08-29",
+          notes:["Build publik awal","Integrasi aktivitas CT","Level demo numerasi"],
+          image:"/img/gambar.jpg",
+          href:"assets/pc/zyland-win.zip",
+          excerpt:"Build publik dengan level demo & aktivitas CT."
+        },
+        {
+          id:"zyland-0-9-0",
+          name:"Zyland",
+          version:"0.9.0",
+          platform:"Windows",
+          size:"~110 MB (ZIP)",
+          req:"Windows x64",
+          date:"2025-07-10",
+          notes:["Perbaikan performa","Penyesuaian UI awal"],
+          image:"/img/gambar.jpg",
+          href:"assets/pc/zyland-0.9.0.zip",
+          excerpt:"Pra-rilis untuk uji internal."
+        }
+      ]
+    };
+
+    // ===== State =====
+    const E = {
+      segAndroid: document.getElementById('seg-android'),
+      segWindows: document.getElementById('seg-windows'),
+      search: document.getElementById('search'),
+      sort: document.getElementById('sort'),
+      latestPlatformBadge: document.getElementById('latestPlatformBadge'),
+      latestDate: document.getElementById('latestDate'),
+      latestTitle: document.getElementById('latestTitle'),
+      latestExcerpt: document.getElementById('latestExcerpt'),
+      latestSpecs: document.getElementById('latestSpecs'),
+      latestHref: document.getElementById('latestHref'),
+      latestImg: document.getElementById('latestImage'),
+      copyLatest: document.getElementById('copyLatest'),
+      timeline: document.getElementById('timeline'),
+      empty: document.getElementById('empty'),
+      toast: document.getElementById('toast')
+    };
+
+    const bulan = ["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
+    const fmtDate = iso => { const d=new Date(iso); return String(d.getDate()).padStart(2,"0")+" "+bulan[d.getMonth()]+" "+d.getFullYear(); };
+
+    let state = { platform:"Android", q:"", sort:"newest" };
+
+    // ===== Theme switch per platform =====
+    const platformTheme = {
+      Android: {accent:"#10b981", accent700:"#059669", soft:"rgba(16,185,129,.08)", ring:"rgba(16,185,129,.35)"},
+      Windows: {accent:"#2563eb", accent700:"#1d4ed8", soft:"rgba(37,99,235,.08)", ring:"rgba(37,99,235,.35)"}
+    };
+    function applyTheme(p){
+      const t = platformTheme[p];
+      document.documentElement.style.setProperty('--accent', t.accent);
+      document.documentElement.style.setProperty('--accent-700', t.accent700);
+      document.documentElement.style.setProperty('--accent-soft', t.soft);
+      document.documentElement.style.setProperty('--accent-ring', t.ring);
+    }
+
+    // ===== Helpers =====
+    const debounce = (fn,ms=250)=>{ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a),ms);} };
+
+    function getList(){
+      const list = (DATA[state.platform] || []).slice();
+      list.sort((a,b)=> state.sort==="oldest" ? new Date(a.date)-new Date(b.date) : new Date(b.date)-new Date(a.date));
+      return list;
+    }
+
+    function renderLatest(){
+      const list = getList();
+      if(!list.length) return;
+      const latest = list[0];
+      E.latestPlatformBadge.textContent = latest.platform;
+      E.latestDate.textContent = fmtDate(latest.date);
+      E.latestTitle.textContent = `${latest.name} v${latest.version}`;
+      E.latestExcerpt.textContent = latest.excerpt || "";
+      E.latestImg.src = latest.image;
+      E.latestImg.alt = latest.name;
+      E.latestHref.href = latest.href;
+
+      E.latestSpecs.innerHTML = `
+        <li><i class="fas fa-box mr-2 text-gray-400"></i>Ukuran: ${latest.size}</li>
+        <li><i class="fas fa-cog mr-2 text-gray-400"></i>${latest.req}</li>
+      `;
+      E.copyLatest.onclick = () => copyToClipboard(latest.href);
+    }
+
+    function renderTimeline(){
+      const list = getList();
+      const filtered = list.filter(item => {
+        if(!state.q.trim()) return true;
+        const q = state.q.toLowerCase();
+        return (
+          item.name.toLowerCase().includes(q) ||
+          item.version.toLowerCase().includes(q) ||
+          item.notes.join(" ").toLowerCase().includes(q) ||
+          (item.excerpt||"").toLowerCase().includes(q)
+        );
+      });
+
+      const timelineItems = filtered.slice(1);
+
+      if(timelineItems.length === 0){
+        E.timeline.innerHTML = "";
+        E.empty.classList.remove('hidden');
+        return;
+      } else {
+        E.empty.classList.add('hidden');
+      }
+
+      E.timeline.innerHTML = timelineItems.map(r=>`
+        <div class="tl-item py-4">
+          <div class="flex items-center justify-between">
+            <div class="text-sm font-semibold text-gray-900">${r.name} <span class="text-gray-500">v${r.version}</span></div>
+            <span class="text-xs text-gray-500">${fmtDate(r.date)}</span>
+          </div>
+          <p class="mt-1 text-sm text-gray-700">${r.excerpt||""}</p>
+          <ul class="mt-2 space-y-1 text-xs text-gray-600 list-disc pl-5">
+            ${r.notes.map(n=>`<li>${n}</li>`).join('')}
+          </ul>
+          <div class="mt-3 flex flex-wrap gap-2">
+            <a href="${r.href}" class="inline-flex items-center gap-2 text-xs font-semibold text-white px-3 py-2 rounded-lg shadow-sm hover:shadow transition"
+               style="background: var(--accent);">
+              <i class="fas fa-download text-[10px] opacity-90"></i> Download
+            </a>
+            <button class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-2 rounded-lg border border-gray-200 hover:bg-white transition copylink"
+                    data-href="${r.href}">
+              <i class="far fa-clipboard text-[10px] opacity-90"></i> Salin link
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    async function copyToClipboard(url){
+      try{
+        await navigator.clipboard.writeText(location.origin.replace(/\/$/,"") + "/" + url.replace(/^\//,""));
+      }catch{
+        const ta = document.createElement('textarea');
+        ta.value = url; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+      }
+      E.toast.textContent = "Tautan disalin";
+      E.toast.classList.remove('hidden');
+      setTimeout(()=> E.toast.classList.add('hidden'), 1400);
+    }
+
+    // ===== Events =====
+    E.search.addEventListener('input', debounce(e => { state.q = e.target.value || ""; renderTimeline(); }, 200));
+    E.sort.addEventListener('change', e => { state.sort = e.target.value; renderLatest(); renderTimeline(); });
+
+    document.addEventListener('click', e=>{
+      const btn = e.target.closest('.copylink');
+      if(btn){ copyToClipboard(btn.dataset.href); }
+    });
+
+    function setPlatform(p){
+      state.platform = p;
+      applyTheme(p);
+      E.segAndroid.setAttribute('aria-pressed', String(p==="Android"));
+      E.segWindows.setAttribute('aria-pressed', String(p==="Windows"));
+      E.search.value = ""; state.q = "";
+      renderLatest(); renderTimeline();
+    }
+    document.getElementById('seg-android').addEventListener('click', ()=> setPlatform("Android"));
+    document.getElementById('seg-windows').addEventListener('click', ()=> setPlatform("Windows"));
+
+    // Reveal on load
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+
+    // Init
+    setPlatform("Android");
+  </script>
+</body>
+</html>

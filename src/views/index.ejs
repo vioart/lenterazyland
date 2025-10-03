@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Lentera Zyland: Program PKM untuk meningkatkan literasi & numerasi—termasuk untuk siswa slow learner—melalui permainan edukatif, AR, dan Computational Thinking (CT).">
+  <meta name="keywords"
+    content="Lentera Zyland, PKM, literasi, numerasi, slow learner, pendidikan inklusif, permainan edukatif, Augmented Reality, Zymath AR, Zylearn, LENTERA Focus, LENTERA Competition, Computational Thinking">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --primary: #16a34a; /* hijau */
+      --primary-700: #15803d; /* hover */
+      --secondary: #facc15; /* kuning */
+      --ink: #0b1220;
+      --paper: #ffffff;
+      --paper-soft: #fffcf2;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--paper);
+      color: var(--ink);
+    }
+
+    /* Modern micro-interactions */
+    .nav-active {
+      color: var(--primary) !important;
+      text-decoration: underline;
+      text-decoration-thickness: 3px;
+      text-underline-offset: 6px;
+      text-decoration-color: var(--secondary);
+    }
+    .card-hover {
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+    }
+    .card-media {
+      position: relative;
+      overflow: hidden;
+    }
+    .card-media::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,.45) 50%, transparent 100%);
+      transform: translateX(-120%);
+      transition: transform .7s ease;
+      pointer-events: none;
+    }
+    .group:hover .card-media::after { transform: translateX(120%); }
+
+    /* Skip to content (aksesibilitas) */
+    .skip-link {
+      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+    }
+    .skip-link:focus {
+      left: 1rem; top: 1rem; width: auto; height: auto; padding: .5rem .75rem;
+      background: var(--secondary); color: #111827; border-radius: .5rem; z-index: 1000;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .reveal {
+        opacity: 0;
+        transform: translateY(14px);
+        transition: opacity .7s ease, transform .7s ease;
+        will-change: opacity, transform;
+      }
+      .reveal.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+  <link rel="icon" href="img/icon.png" type="image/png" />
+  <title>Lentera Zyland</title>
+</head>
+
+<body class="font-sans antialiased text-gray-800 selection:bg-yellow-200 selection:text-gray-900 scroll-smooth">
+
+  <!-- Skip link -->
+  <a href="#home" class="skip-link">Lewati ke konten utama</a>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Branding -->
+        <a href="/" class="inline-flex items-center gap-2 group" aria-label="Beranda">
+          <span class="inline-block h-8 w-1.5 rounded-full" style="background: var(--secondary)"></span>
+          <span class="font-[Lobster] text-2xl leading-none text-gray-900">Lentera Zyland</span>
+          <span class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Home</a>
+          <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a>
+          <a href="/program" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Program</a>
+          <a href="/download" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Download</a>
+          <a href="/tentang" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Tentang</a>
+        </nav>
+
+        <!-- CTA -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+             aria-label="Buka Instagram Lentera Zyland">
+            <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+          </a>
+        </div>
+
+        <!-- Mobile menu button -->
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
+          aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu panel -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white/95 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
+        <a href="/" class="block py-2 text-gray-800 hover:text-gray-900">Home</a>
+        <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a>
+        <a href="/program" class="block py-2 text-gray-800 hover:text-gray-900">Program</a>
+        <a href="/download" class="block py-2 text-gray-800 hover:text-gray-900">Download</a>
+        <a href="/tentang" class="block py-2 text-gray-800 hover:text-gray-900">Tentang</a>
+        <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
+          <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main -->
+  <main id="home" class="scroll-mt-24">
+    <!-- Hero -->
+    <section class="relative overflow-hidden">
+      <div class="absolute inset-x-0 -top-16 h-16"
+        style="background: linear-gradient(90deg, var(--secondary), rgba(250,204,21,0)); opacity:.8;"></div>
+
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+          <div class="reveal">
+            <h1 class="text-3xl sm:text-4xl lg:text-4xl font-extrabold text-gray-900 leading-tight">
+              Menerangi Literasi & Numerasi <span class="whitespace-nowrap">dengan Teknologi</span>
+            </h1>
+            <p class="mt-4 text-gray-600 max-w-prose">
+              Lentera Zyland adalah inisiatif PKM yang menghadirkan pembelajaran inklusif melalui
+              permainan edukatif, AR, dan <strong>Computational Thinking (CT)</strong> yang menyenangkan.
+            </p>
+            <div class="mt-6 flex flex-wrap items-center gap-3">
+              <a href="#program"
+                class="group inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-2.5 rounded-xl shadow-sm hover:shadow transition"
+                style="background: var(--primary);">
+                Jelajahi Program
+                <i class="fas fa-arrow-right text-xs opacity-90 transform transition-transform group-hover:translate-x-0.5"></i>
+              </a>
+              <a href="/berita"
+                class="inline-flex items-center gap-2 text-sm font-semibold px-5 py-2.5 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition">
+                Lihat Berita
+              </a>
+            </div>
+
+            <!-- Small stats (count up) -->
+            <dl class="mt-8 grid grid-cols-3 gap-4 max-w-md">
+              <div class="reveal bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+                <dt class="text-xs text-gray-500">Siswa Terbantu</dt>
+                <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="29">0</span></dd>
+              </div>
+              <div class="reveal bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+                <dt class="text-xs text-gray-500">Guru & Orang Tua</dt>
+                <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="41">0</span></dd>
+              </div>
+              <div class="reveal bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+                <dt class="text-xs text-gray-500">Aplikasi</dt>
+                <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="2">0</span></dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="reveal relative">
+            <div class="rounded-2xl border border-gray-100 bg-gradient-to-br from-white to-gray-50 p-3 shadow-sm card-hover">
+              <img src="img/gambar.jpg" alt="Ilustrasi kegiatan Lentera Zyland"
+                class="rounded-xl object-cover w-full h-64 sm:h-80" loading="eager" />
+            </div>
+            <div class="absolute -bottom-4 -left-4 w-28 h-28 rounded-2xl"
+              style="background: var(--secondary); filter: blur(40px); opacity:.45"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Program -->
+    <section id="program" class="py-14 sm:py-20 bg-white scroll-mt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal text-center">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full"
+            style="background: rgba(22,163,74,0.08); color: var(--primary); border:1px solid rgba(22,163,74,.15);">
+            <i class="fas fa-lightbulb"></i> Program Utama
+          </span>
+          <h2 class="mt-3 text-2xl sm:text-3xl font-extrabold text-gray-900">Belajar Seru & Inklusif</h2>
+          <p class="mt-2 text-gray-600">Empat pilar aktivitas Lentera Zyland — terintegrasi <strong>Computational
+              Thinking</strong>.</p>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Fun LENTERA -->
+          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+            <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
+              <i class="fas fa-gamepad text-yellow-600 transform transition-transform group-hover:scale-110"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900">Fun LENTERA</h3>
+            <p class="mt-2 text-sm text-gray-600">AR, Number Board, dan Book Storytime untuk literasi-numerasi
+              menyenangkan.</p>
+          </article>
+
+          <!-- LENTERA Focus -->
+          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+            <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
+              <i class="fas fa-bullseye text-yellow-600 transform transition-transform group-hover:scale-110"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900">LENTERA Focus</h3>
+            <p class="mt-2 text-sm text-gray-600">Latih konsentrasi, ketekunan, dan kerja sama melalui permainan
+              terstruktur.</p>
+          </article>
+
+          <!-- Zylearn -->
+          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+            <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
+              <i class="fas fa-chalkboard-teacher text-yellow-600 transform transition-transform group-hover:scale-110"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900">Zylearn</h3>
+            <p class="mt-2 text-sm text-gray-600">Lokakarya untuk guru & orang tua agar praktik berlanjut di rumah dan
+              kelas.</p>
+          </article>
+
+          <!-- LENTERA Competition -->
+          <article class="reveal group bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-lg transition card-hover">
+            <div class="h-10 w-10 grid place-content-center rounded-lg mb-4" style="background: rgba(250,204,21,0.25);">
+              <i class="fas fa-trophy text-yellow-600 transform transition-transform group-hover:scale-110"></i>
+            </div>
+            <h3 class="font-semibold text-gray-900">LENTERA Competition</h3>
+            <p class="mt-2 text-sm text-gray-600">Apresiasi capaian belajar melalui kompetisi/lomba mini.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Berita -->
+    <section id="berita" class="py-14 sm:py-20 bg-gray-50 scroll-mt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal flex items-end justify-between gap-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Berita Terbaru</h2>
+            <p class="mt-2 text-gray-600">Kabar rilis, dokumentasi kegiatan, dan liputan media.</p>
+          </div>
+          <a href="/berita"
+            class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 hover:bg-white transition">Lihat
+            semua</a>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Kartu berita -->
+          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+            <a href="/berita/rilis-zymath-ar-120">
+              <div class="card-media h-40">
+                <img src="img/gambar.jpg" alt="Rilis Zymath AR"
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+              </div>
+            </a>
+            <div class="p-5">
+              <span class="text-xs text-gray-500">28 Sep 2025</span>
+              <h3 class="mt-1 font-semibold text-gray-900">
+                <a href="/berita/rilis-zymath-ar-120" class="hover:underline">Rilis Zymath AR 1.2.0</a>
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">Tracking lebih stabil dan aset 3D lebih ringan.</p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Rilis</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+            <a href="/berita/workshop-zylearn">
+              <div class="card-media h-40">
+                <img src="img/gambar.jpg" alt="Workshop Zylearn"
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+              </div>
+            </a>
+            <div class="p-5">
+              <span class="text-xs text-gray-500">20 Sep 2025</span>
+              <h3 class="mt-1 font-semibold text-gray-900">
+                <a href="/berita/workshop-zylearn" class="hover:underline">Workshop Zylearn untuk Guru</a>
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">Penguatan praktik di kelas dan di rumah.</p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Pelatihan</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden hover:shadow-xl transition group card-hover">
+            <a href="/berita/fun-lentera-sd-mitra">
+              <div class="card-media h-40">
+                <img src="img/gambar.jpg" alt="Kegiatan Fun LENTERA"
+                  class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy" />
+              </div>
+            </a>
+            <div class="p-5">
+              <span class="text-xs text-gray-500">05 Sep 2025</span>
+              <h3 class="mt-1 font-semibold text-gray-900">
+                <a href="/berita/fun-lentera-sd-mitra" class="hover:underline">Fun LENTERA di SD Mitra</a>
+              </h3>
+              <p class="mt-2 text-sm text-gray-600">Belajar numerasi dengan permainan kolaboratif.</p>
+              <div class="mt-3 flex items-center gap-2">
+                <span class="text-[11px] px-2 py-1 rounded-full bg-yellow-50 text-yellow-700 border border-yellow-200">Kegiatan</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Download (Zymath AR Android & Zyland PC) -->
+    <section id="download" class="py-14 sm:py-20 bg-white scroll-mt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal text-center">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Download</h2>
+          <p class="mt-2 text-gray-600">Unduh <strong>Zymath AR</strong> (Android) dan <strong>Zyland</strong>
+            (Windows/PC).</p>
+        </div>
+
+        <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+          <!-- Card: Zymath AR -->
+          <article
+            class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col card-hover">
+            <div class="card-media h-56">
+              <img src="img/gambar.jpg" alt="Tangkapan layar Zymath AR"
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy">
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-gray-900 text-lg">Zymath AR</h3>
+                <span class="text-xs px-2 py-1 rounded-md text-gray-900" style="background: var(--secondary);">Android</span>
+              </div>
+              <p class="mt-2 text-sm text-gray-600">Pembelajaran berbasis Augmented Reality untuk literasi & numerasi.
+              </p>
+              <ul class="mt-3 space-y-1 text-sm text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i> MinSDK: 24</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i> Ukuran: 72 MB</li>
+              </ul>
+              <div class="mt-auto pt-4">
+                <a href="assets/apk/zymath-ar-1.2.0.apk"
+                  class="inline-flex items-center gap-2 text-sm font-semibold text-white px-4 py-2.5 rounded-xl shadow-sm hover:shadow transition"
+                  style="background: var(--primary);">
+                  <i class="fas fa-download text-xs opacity-90"></i> Download .APK
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card: Zyland (PC) -->
+          <article
+            class="reveal bg-white border border-gray-100 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition group h-full flex flex-col card-hover">
+            <div class="card-media h-56">
+              <img src="img/gambar.jpg" alt="Tangkapan layar Zyland"
+                class="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105" loading="lazy">
+            </div>
+            <div class="p-5 flex-1 flex flex-col">
+              <div class="flex items-center justify-between">
+                <h3 class="font-semibold text-gray-900 text-lg">Zyland</h3>
+                <span class="text-xs px-2 py-1 rounded-md text-gray-900" style="background: var(--secondary);">Windows/PC</span>
+              </div>
+              <p class="mt-2 text-sm text-gray-600">Game edukasi untuk literasi & numerasi melalui <strong>Computational
+                  Thinking</strong>.</p>
+              <ul class="mt-3 space-y-1 text-sm text-gray-700">
+                <li><i class="fas fa-check text-green-600 mr-2"></i> Platform: Windows (x64)</li>
+                <li><i class="fas fa-check text-green-600 mr-2"></i> Format: ZIP</li>
+              </ul>
+              <div class="mt-auto pt-4">
+                <a href="assets/pc/zyland-win.zip"
+                  class="inline-flex items-center gap-2 text-sm font-semibold text-white px-4 py-2.5 rounded-xl shadow-sm hover:shadow transition"
+                  style="background: var(--primary);">
+                  <i class="fas fa-download text-xs opacity-90"></i> Download .ZIP
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tentang (tambah logo + tim 5 orang) -->
+    <section id="tentang" class="py-14 sm:py-20 bg-gray-50 scroll-mt-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="reveal text-center">
+          <img src="img/logo.png" alt="Logo Lentera Zyland" class="h-56 mx-auto mb-3">
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Tentang Lentera Zyland</h2>
+          <p class="mt-2 text-gray-600 max-w-2xl mx-auto">Filosofi logo: anak membawa <em>lentera</em> di atas buku
+            (simbol literasi) dengan aksen teknologi untuk menekankan inovasi pembelajaran inklusif.</p>
+        </div>
+
+        <div class="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Vio Arvendha" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+            <h3 class="mt-3 font-semibold text-gray-900">Vio Arvendha</h3>
+            <p class="text-sm text-gray-600">Ketua Tim</p>
+          </div>
+          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Rahadatul Aisy Tsamarah Ilyas" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+            <h3 class="mt-3 font-semibold text-gray-900">Rahadatul Aisy T. I.</h3>
+            <p class="text-sm text-gray-600">Anggota</p>
+          </div>
+          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Suryani Elmaghfiroh" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+            <h3 class="mt-3 font-semibold text-gray-900">Suryani Elmaghfiroh</h3>
+            <p class="text-sm text-gray-600">Anggota</p>
+          </div>
+          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Ryani Dewi Nuraini" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+            <h3 class="mt-3 font-semibold text-gray-900">Ryani Dewi Nuraini</h3>
+            <p class="text-sm text-gray-600">Anggota</p>
+          </div>
+          <div class="reveal bg-white border border-gray-100 rounded-2xl p-6 text-center hover:shadow-lg transition card-hover">
+            <img src="img/gambar.jpg" alt="Dhandy Hananthiyo Ardhy Putra" class="w-20 h-20 rounded-full object-cover mx-auto" loading="lazy"/>
+            <h3 class="mt-3 font-semibold text-gray-900">Dhandy H. A. Putra</h3>
+            <p class="text-sm text-gray-600">Anggota</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Back to top -->
+  <button id="toTop" class="fixed bottom-6 right-6 opacity-0 pointer-events-none transition focus:outline-none"
+          aria-label="Kembali ke atas">
+    <span class="inline-flex items-center justify-center w-11 h-11 rounded-full shadow-sm hover:shadow"
+          style="background: var(--primary); color: white;">
+      <i class="fas fa-arrow-up"></i>
+    </span>
+  </button>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-100 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div class="reveal">
+          <h3 class="font-semibold text-gray-900">Lentera Zyland</h3>
+          <p class="mt-2 text-sm text-gray-600">Inovasi pembelajaran inklusif melalui game edukasi berlandaskan
+            Computational Thinking</p>
+          <div class="mt-3 flex items-center gap-3 text-gray-500">
+            <a href="#" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="reveal">
+          <h4 class="font-semibold text-gray-900">Navigasi</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li><a href="/" class="hover:text-gray-900">Home</a></li>
+            <li><a href="/berita" class="hover:text-gray-900">Berita</a></li>
+            <li><a href="/program" class="hover:text-gray-900">Program</a></li>
+            <li><a href="/download" class="hover:text-gray-900">Download</a></li>
+            <li><a href="/tentang" class="hover:text-gray-900">Tentang</a></li>
+          </ul>
+        </div>
+        <div class="reveal">
+          <h4 class="font-semibold text-gray-900">Kontak</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li>Email: <a href="mailto:lenterazyland1@gmail.com" class="underline">lenterazyland1@gmail.com</a></li>
+            <li>Alamat: Surakarta</li>
+          </ul>
+        </div>
+      </div>
+      <div class="py-4 border-t border-gray-100 text-xs text-gray-500 flex items-center justify-between">
+        <span>© <span id="year"></span> Lentera Zyland • All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS kecil: tahun + scroll reveal + header shadow on scroll + interaksi modern -->
+  <script>
+    // Tahun otomatis
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Header shadow saat scroll
+    const header = document.querySelector('header');
+    const toggleHeaderShadow = () => {
+      if (window.scrollY > 4) header.classList.add('shadow-sm');
+      else header.classList.remove('shadow-sm');
+    };
+    toggleHeaderShadow();
+    window.addEventListener('scroll', toggleHeaderShadow);
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+      menuBtn.setAttribute('aria-expanded', String(!expanded));
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Scroll reveal (tanpa lib eksternal)
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced && 'IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+    } else {
+      document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+    }
+
+    // Count up animation
+    const counters = document.querySelectorAll('.countup');
+    if (counters.length && 'IntersectionObserver' in window) {
+      const cObs = new IntersectionObserver((entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          const target = +el.dataset.target;
+          const dur = 900; // ms
+          const start = performance.now();
+          const step = (now) => {
+            const p = Math.min((now - start) / dur, 1);
+            el.textContent = Math.floor(target * p);
+            if (p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          cObs.unobserve(el);
+        });
+      }, { threshold: 0.6 });
+      counters.forEach(c => cObs.observe(c));
+    } else {
+      counters.forEach(c => c.textContent = c.dataset.target);
+    }
+
+    // Back to top
+    const toTop = document.getElementById('toTop');
+    const toggleToTop = () => {
+      if (window.scrollY > 600) {
+        toTop.classList.remove('opacity-0', 'pointer-events-none');
+        toTop.classList.add('opacity-100');
+      } else {
+        toTop.classList.add('opacity-0', 'pointer-events-none');
+        toTop.classList.remove('opacity-100');
+      }
+    };
+    toggleToTop();
+    window.addEventListener('scroll', toggleToTop, { passive: true });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>

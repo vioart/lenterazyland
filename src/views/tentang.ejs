@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Tentang Lentera Zyland: misi, visi, nilai inti, pendekatan Computational Thinking, perjalanan, dan tim."/>
+  <title>Tentang • Lentera Zyland</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"/>
+
+  <!-- Tailwind + Icons -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+
+  <link rel="icon" href="/img/icon.png" type="image/png" />
+
+  <style>
+    :root{
+      --primary:#16a34a; /* hijau */
+      --primary-700:#15803d;
+      --secondary:#facc15; /* kuning */
+      --ink:#0b1220;
+      --paper:#ffffff;
+
+      --mesh1:rgba(250,204,21,.25);
+      --mesh2:rgba(22,163,74,.18);
+      --ring:rgba(22,163,74,.14);
+    }
+
+    /* ==== OVERFLOW SAFEGUARDS (fix mobile horizontal scroll) ==== */
+    *,*::before,*::after{ box-sizing:border-box; }
+    html,body{ width:100%; max-width:100%; overflow-x:hidden; }
+    header,main,footer{ width:100%; overflow-x:hidden; }
+
+    body{ font-family:'Poppins',sans-serif; color:var(--ink); background:var(--paper); }
+
+    /* hero mesh */
+    .hero{
+      position:relative; isolation:isolate;
+      background:
+        radial-gradient(900px 450px at 100% -10%, var(--mesh1), transparent 60%),
+        radial-gradient(600px 350px at -10% 100%, var(--mesh2), transparent 60%);
+      /* penting: clip dekorasi supaya tidak melebar layar */
+      overflow:hidden;
+    }
+    .blob {
+      position:absolute; inset:0; z-index:-1; pointer-events:none;
+    }
+    .blob::before, .blob::after{
+      content:""; position:absolute; border-radius:9999px; filter: blur(60px); opacity:.6;
+    }
+    .blob::before{ width:300px; height:300px; top:-40px; left:-40px; background:var(--secondary); }
+    .blob::after { width:360px; height:360px; bottom:-60px; right:-60px; background:#86efac; } /* green-200 */
+
+    /* micro-interactions */
+    .card-hover{ transition: transform .28s ease, box-shadow .28s ease; }
+    .card-hover:hover{ transform: translateY(-4px); }
+    .ring-soft{ box-shadow: 0 0 0 6px var(--ring); }
+    .tilt{ transform: rotate(-2.5deg); }
+    .tilt2{ transform: rotate(2deg); }
+
+    /* tabs */
+    .seg-btn{ border:1px solid rgba(0,0,0,.08); background:#fff; }
+    .seg-btn[aria-pressed="true"]{
+      background: var(--primary); color:#fff; border-color: transparent;
+    }
+
+    /* timeline */
+    .tl{ position:relative; }
+    .tl::before{
+      content:""; position:absolute; top:0; left:20px; bottom:0; width:2px;
+      background: linear-gradient(to bottom, var(--primary), transparent);
+      opacity:.35;
+    }
+    .tl-item{ position:relative; padding-left:56px; }
+    .tl-item::before{
+      content:""; position:absolute; left:12px; top:.75rem; width:16px; height:16px; border-radius:9999px;
+      background: var(--primary); box-shadow: 0 0 0 4px rgba(22,163,74,.12);
+    }
+
+    /* team card */
+    .team-card{ position:relative; overflow:hidden; }
+    .team-card .overlay{
+      position:absolute; inset:0; display:flex; flex-direction:column; justify-content:flex-end;
+      background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0));
+      opacity:0; transition: opacity .25s ease;
+    }
+    .team-card:hover .overlay{ opacity:1; }
+
+    .chip{ user-select:none; }
+    .chip-ct{
+      background: rgba(22,163,74,.08);
+      border:1px solid rgba(22,163,74,.18);
+      color:#065f46; /* green-700 */
+    }
+
+    .hide-scrollbar{ -ms-overflow-style:none; scrollbar-width:none; }
+    .hide-scrollbar::-webkit-scrollbar{ display:none; }
+
+    @media (prefers-reduced-motion:no-preference){
+      .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+      .reveal.show{ opacity:1; transform:translateY(0); }
+    }
+  </style>
+</head>
+<body class="antialiased text-gray-800 selection:bg-yellow-200 selection:text-gray-900">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Branding -->
+        <a href="/" class="inline-flex items-center gap-2 group" aria-label="Beranda">
+          <span class="inline-block h-8 w-1.5 rounded-full" style="background:var(--secondary)"></span>
+          <span class="font-[Lobster] text-2xl leading-none text-gray-900">Lentera Zyland</span>
+          <span class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
+        </a>
+
+        <!-- Nav -->
+        <nav class="hidden md:flex items-center gap-6">
+          <a href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Home</a>
+          <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a>
+          <a href="/program" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Program</a>
+          <a href="/download" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Download</a>
+          <a href="/tentang" class="text-sm font-semibold text-gray-900 underline underline-offset-8 decoration-yellow-300">Tentang</a>
+        </nav>
+
+        <!-- CTA -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+             class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
+             aria-label="Buka Instagram Lentera Zyland">
+            <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+          </a>
+        </div>
+
+        <!-- Mobile menu -->
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
+                aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile panel -->
+    <div id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white/95 backdrop-blur">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
+        <a href="/" class="block py-2 text-gray-800 hover:text-gray-900">Home</a>
+        <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a>
+        <a href="/program" class="block py-2 text-gray-800 hover:text-gray-900">Program</a>
+        <a href="/download" class="block py-2 text-gray-800 hover:text-gray-900">Download</a>
+        <a href="/tentang" class="block py-2 text-gray-800 hover:text-gray-900 font-semibold underline underline-offset-8 decoration-yellow-300">Tentang</a>
+        <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
+           class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
+          <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero pt-10 sm:pt-14 pb-8 sm:pb-12">
+    <div class="blob"></div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        <div class="reveal lg:col-span-6">
+          <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full"
+                style="background: rgba(22,163,74,.08); color: var(--primary); border:1px solid rgba(22,163,74,.18);">
+            <i class="fas fa-seedling"></i> Tentang Kami
+          </span>
+          <h1 class="mt-3 text-2xl sm:text-3xl font-extrabold text-gray-900">Misi kecil, dampak besar.</h1>
+          <p class="mt-2 text-gray-700 max-w-prose">
+            Lentera Zyland menggabungkan permainan edukasi, Augmented Reality, dan <strong>Computational Thinking</strong> (CT)
+            untuk menyalakan rasa ingin tahu semua anak—termasuk <em>slow learner</em>—dengan cara yang hangat dan terarah.
+          </p>
+
+          <div class="mt-5 grid grid-cols-3 gap-4 max-w-md">
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+              <dt class="text-xs text-gray-500">Siswa Terbantu</dt>
+              <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="29">0</span></dd>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+              <dt class="text-xs text-gray-500">Guru/Ortu</dt>
+              <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="41">0</span></dd>
+            </div>
+            <div class="bg-white border border-gray-100 rounded-xl p-4 text-center shadow-sm card-hover">
+              <dt class="text-xs text-gray-500">Aplikasi</dt>
+              <dd class="mt-1 text-xl font-bold text-gray-900"><span class="countup" data-target="2">0</span></dd>
+            </div>
+          </div>
+        </div>
+
+        <!-- Kolase gambar -->
+        <div class="reveal lg:col-span-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="rounded-2xl overflow-hidden border border-gray-100 shadow-sm ring-soft tilt">
+              <img src="/img/gambar.jpg" alt="Aktivitas AR" class="w-full h-52 object-cover"/>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-gray-100 shadow-sm ring-soft tilt2 translate-y-6">
+              <img src="/img/gambar.jpg" alt="Permainan numerasi" class="w-full h-52 object-cover"/>
+            </div>
+            <div class="rounded-2xl overflow-hidden border border-gray-100 shadow-sm ring-soft -translate-y-6">
+              <img src="/img/gambar.jpg" alt="Workshop Zylearn" class="w-full h-52 object-cover"/>
+            </div>
+            <div class="relative">
+              <div class="rounded-2xl overflow-hidden border border-gray-100 shadow-sm">
+                <img src="/img/logo.png" alt="Logo Lentera Zyland" class="w-full h-52 object-contain bg-white p-6"/>
+              </div>
+              <!-- blur glow akan ter-clip oleh .hero overflow-hidden -->
+              <div class="absolute -bottom-4 -right-4 w-24 h-24 rounded-3xl" style="background: var(--secondary); filter: blur(30px); opacity:.55"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs: Visi / Misi / CT -->
+      <div class="mt-10">
+        <div class="inline-flex rounded-xl overflow-hidden bg-white/80 seg-btn-group shadow-sm">
+          <button id="tab-visi" class="seg-btn px-4 py-2 text-sm font-semibold" aria-pressed="true" data-tab="visi">Visi</button>
+          <button id="tab-misi" class="seg-btn px-4 py-2 text-sm font-semibold" aria-pressed="false" data-tab="misi">Misi</button>
+          <button id="tab-ct"   class="seg-btn px-4 py-2 text-sm font-semibold" aria-pressed="false" data-tab="ct">Pendekatan CT</button>
+        </div>
+
+        <div class="mt-4 grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-8">
+            <div id="panel-visi" class="rounded-2xl border border-gray-100 bg-white p-6 reveal show">
+              <h3 class="text-lg font-bold text-gray-900">Visi</h3>
+              <p class="mt-2 text-gray-700">
+                Menghadirkan pengalaman belajar inklusif yang menumbuhkan kemandirian berpikir dan kegemaran belajar
+                melalui teknologi yang ramah anak.
+              </p>
+            </div>
+            <div id="panel-misi" class="rounded-2xl border border-gray-100 bg-white p-6 hidden">
+              <h3 class="text-lg font-bold text-gray-900">Misi</h3>
+              <ul class="mt-2 space-y-2 text-gray-700 list-disc pl-5">
+                <li>Merancang permainan edukasi dan AR yang menanamkan konsep literasi & numerasi.</li>
+                <li>Mendasarkan aktivitas pada empat pilar <em>Computational Thinking</em>.</li>
+                <li>Mendampingi guru & orang tua melalui <strong>Zylearn</strong> agar praktik berlanjut di rumah/sekolah.</li>
+              </ul>
+            </div>
+            <div id="panel-ct" class="rounded-2xl border border-gray-100 bg-white p-6 hidden">
+              <h3 class="text-lg font-bold text-gray-900">Empat Pilar CT</h3>
+              <div class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="rounded-xl border border-gray-100 p-4 card-hover">
+                  <div class="chip chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md"><i class="fas fa-cut mr-1"></i> Decomposition</div>
+                  <p class="mt-2 text-sm text-gray-700">Memecah masalah kompleks jadi langkah sederhana.</p>
+                </div>
+                <div class="rounded-xl border border-gray-100 p-4 card-hover">
+                  <div class="chip chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md"><i class="fas fa-shapes mr-1"></i> Pattern Recognition</div>
+                  <p class="mt-2 text-sm text-gray-700">Mengenali kemiripan & pola untuk mempercepat pemahaman.</p>
+                </div>
+                <div class="rounded-xl border border-gray-100 p-4 card-hover">
+                  <div class="chip chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md"><i class="fas fa-layer-group mr-1"></i> Abstraction</div>
+                  <p class="mt-2 text-sm text-gray-700">Fokus pada hal esensial, menyederhanakan detail yang tak penting.</p>
+                </div>
+                <div class="rounded-xl border border-gray-100 p-4 card-hover">
+                  <div class="chip chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md"><i class="fas fa-stream mr-1"></i> Algorithmic Thinking</div>
+                  <p class="mt-2 text-sm text-gray-700">Menyusun langkah sistematis untuk menyelesaikan tugas.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Nilai inti (berbeda gaya: chip belt) -->
+          <aside class="lg:col-span-4">
+            <div class="rounded-2xl border border-gray-100 bg-white p-6">
+              <h3 class="text-lg font-bold text-gray-900">Nilai Inti</h3>
+              <div class="mt-3 hide-scrollbar overflow-x-auto whitespace-nowrap -mx-2 px-2">
+                <span class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg border chip-ct mr-2 mb-2"><i class="fas fa-heart"></i> Inklusif</span>
+                <span class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg border chip-ct mr-2 mb-2"><i class="fas fa-child"></i> Ramah Anak</span>
+                <span class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg border chip-ct mr-2 mb-2"><i class="fas fa-brain"></i> Berpikir Kritis</span>
+                <span class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg border chip-ct mr-2 mb-2"><i class="fas fa-puzzle-piece"></i> Bermain Serius</span>
+                <span class="inline-flex items-center gap-2 text-xs px-3 py-2 rounded-lg border chip-ct mr-2 mb-2"><i class="fas fa-hands-helping"></i> Kolaboratif</span>
+              </div>
+              <p class="mt-3 text-sm text-gray-600">Semua nilai di atas kami tanamkan ke dalam desain game, modul, dan kegiatan bersama sekolah/komunitas.</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline Perjalanan -->
+  <section class="py-12 sm:py-16 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal flex items-end justify-between">
+        <div>
+          <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900">Perjalanan Singkat</h2>
+          <p class="mt-1 text-gray-600">Tonggak perkembangan program & produk.</p>
+        </div>
+      </div>
+
+      <div class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="lg:col-span-7">
+          <div class="rounded-3xl bg-white p-6 border border-gray-100 shadow-sm">
+            <div class="tl">
+              <div class="tl-item py-4">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-gray-900"><i class="fas fa-flag-checkered mr-2 text-gray-400"></i> Kickoff Lentera Zyland</div>
+                  <span class="text-xs text-gray-500">Mei 2025</span>
+                </div>
+                <p class="mt-1 text-sm text-gray-700">Perumusan misi, sketsa AR & desain permainan numerasi.</p>
+              </div>
+              <div class="tl-item py-4">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-gray-900"><i class="fas fa-vr-cardboard mr-2 text-gray-400"></i> Zymath AR 1.1.0</div>
+                  <span class="text-xs text-gray-500">Ags 2025</span>
+                </div>
+                <p class="mt-1 text-sm text-gray-700">Uji rintis di dua kelas; perbaikan kompatibilitas.</p>
+              </div>
+              <div class="tl-item py-4">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-gray-900"><i class="fas fa-rocket mr-2 text-gray-400"></i> Zymath AR 1.2.0</div>
+                  <span class="text-xs text-gray-500">Sep 2025</span>
+                </div>
+                <p class="mt-1 text-sm text-gray-700">Tracking lebih stabil; aset 3D dioptimalkan.</p>
+              </div>
+              <div class="tl-item py-4">
+                <div class="flex items-center justify-between">
+                  <div class="text-sm font-semibold text-gray-900"><i class="fas fa-gamepad mr-2 text-gray-400"></i> Zyland (Windows) 1.0.0</div>
+                  <span class="text-xs text-gray-500">Sep 2025</span>
+                </div>
+                <p class="mt-1 text-sm text-gray-700">Build publik awal dengan level demo CT & numerasi.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Quote / Manifesto -->
+        <div class="lg:col-span-5">
+          <div class="rounded-3xl bg-white p-6 border border-gray-100 shadow-sm h-full flex flex-col justify-between card-hover">
+            <blockquote class="text-lg font-semibold text-gray-900 leading-relaxed">
+              “Anak belajar paling baik saat mereka bermain. Tugas kita adalah memastikan setiap permainan mengantar mereka pada cara
+              berpikir yang lebih terstruktur dan percaya diri.”
+            </blockquote>
+            <div class="mt-4 text-sm text-gray-500">— Tim Lentera Zyland</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tim (Mosaic) -->
+  <section class="py-12 sm:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="reveal text-center">
+        <h2 class="text-xl sm:text-2xl font-extrabold text-gray-900">Tim</h2>
+        <p class="mt-1 text-gray-600">Lima orang, satu visi yang sama.</p>
+      </div>
+
+      <div class="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <!-- 1 -->
+        <article class="team-card rounded-2xl overflow-hidden border border-gray-100 shadow-sm card-hover lg:col-span-1">
+          <img src="/img/gambar.jpg" alt="Vio Arvendha" class="w-full h-56 object-cover"/>
+          <div class="overlay p-4">
+            <h3 class="text-white font-semibold">Vio Arvendha</h3>
+            <p class="text-white/90 text-xs">Ketua Tim</p>
+          </div>
+        </article>
+        <!-- 2 -->
+        <article class="team-card rounded-2xl overflow-hidden border border-gray-100 shadow-sm card-hover">
+          <img src="/img/gambar.jpg" alt="Rahadatul Aisy T. I." class="w-full h-56 object-cover"/>
+          <div class="overlay p-4">
+            <h3 class="text-white font-semibold">Rahadatul Aisy T. I.</h3>
+            <p class="text-white/90 text-xs">Anggota</p>
+          </div>
+        </article>
+        <!-- 3 -->
+        <article class="team-card rounded-2xl overflow-hidden border border-gray-100 shadow-sm card-hover">
+          <img src="/img/gambar.jpg" alt="Suryani Elmaghfiroh" class="w-full h-56 object-cover"/>
+          <div class="overlay p-4">
+            <h3 class="text-white font-semibold">Suryani Elmaghfiroh</h3>
+            <p class="text-white/90 text-xs">Anggota</p>
+          </div>
+        </article>
+        <!-- 4 -->
+        <article class="team-card rounded-2xl overflow-hidden border border-gray-100 shadow-sm card-hover">
+          <img src="/img/gambar.jpg" alt="Ryani Dewi Nuraini" class="w-full h-56 object-cover"/>
+          <div class="overlay p-4">
+            <h3 class="text-white font-semibold">Ryani Dewi Nuraini</h3>
+            <p class="text-white/90 text-xs">Anggota</p>
+          </div>
+        </article>
+        <!-- 5 -->
+        <article class="team-card rounded-2xl overflow-hidden border border-gray-100 shadow-sm card-hover">
+          <img src="/img/gambar.jpg" alt="Dhandy H. A. Putra" class="w-full h-56 object-cover"/>
+          <div class="overlay p-4">
+            <h3 class="text-white font-semibold">Dhandy H. A. Putra</h3>
+            <p class="text-white/90 text-xs">Anggota</p>
+          </div>
+        </article>
+      </div>
+
+      <!-- CTA Mitra -->
+      <div class="mt-10 text-center">
+        <a href="mailto:lenterazyland1@gmail.com"
+           class="inline-flex items-center gap-2 text-sm font-semibold text-white px-5 py-3 rounded-xl shadow-sm hover:shadow transition"
+           style="background: var(--primary);">
+          <i class="fas fa-handshake"></i> Kolaborasi / Kemitraan
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="border-t border-gray-100 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div class="reveal show">
+          <h3 class="font-semibold text-gray-900">Lentera Zyland</h3>
+          <p class="mt-2 text-sm text-gray-600">Inovasi pembelajaran inklusif melalui game edukasi berlandaskan Computational Thinking</p>
+          <div class="mt-3 flex items-center gap-3 text-gray-500">
+            <a href="#" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="#" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+          </div>
+        </div>
+        <div class="reveal show">
+          <h4 class="font-semibold text-gray-900">Navigasi</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li><a href="/" class="hover:text-gray-900">Home</a></li>
+            <li><a href="/berita" class="hover:text-gray-900">Berita</a></li>
+            <li><a href="/program" class="hover:text-gray-900">Program</a></li>
+            <li><a href="/download" class="hover:text-gray-900">Download</a></li>
+            <li><a href="/tentang" class="hover:text-gray-900">Tentang</a></li>
+          </ul>
+        </div>
+        <div class="reveal show">
+          <h4 class="font-semibold text-gray-900">Kontak</h4>
+          <ul class="mt-2 text-sm text-gray-600 space-y-1">
+            <li>Email: <a href="mailto:lenterazyland1@gmail.com" class="underline">lenterazyland1@gmail.com</a></li>
+            <li>Alamat: Surakarta</li>
+          </ul>
+        </div>
+      </div>
+      <div class="py-4 border-t border-gray-100 text-xs text-gray-500 flex items-center justify-between">
+        <span>© <span id="year"></span> Lentera Zyland • All rights reserved.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script -->
+  <script>
+    // Tahun footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Mobile menu
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if(menuBtn){
+      menuBtn.addEventListener('click', () => {
+        const expanded = menuBtn.getAttribute('aria-expanded') === 'true';
+        menuBtn.setAttribute('aria-expanded', String(!expanded));
+        mobileMenu.classList.toggle('hidden');
+      });
+    }
+
+    // Reveal
+    document.querySelectorAll('.reveal').forEach(el => el.classList.add('show'));
+
+    // Tabs
+    const tabs = {
+      visi: {btn: document.getElementById('tab-visi'), panel: document.getElementById('panel-visi')},
+      misi: {btn: document.getElementById('tab-misi'), panel: document.getElementById('panel-misi')},
+      ct:   {btn: document.getElementById('tab-ct'),   panel: document.getElementById('panel-ct')}
+    };
+    function setTab(name){
+      Object.entries(tabs).forEach(([k,{btn,panel}])=>{
+        const active = k===name;
+        btn.setAttribute('aria-pressed', String(active));
+        panel.classList.toggle('hidden', !active);
+      });
+    }
+    tabs.visi.btn.addEventListener('click', ()=> setTab('visi'));
+    tabs.misi.btn.addEventListener('click', ()=> setTab('misi'));
+    tabs.ct.btn.addEventListener('click',   ()=> setTab('ct'));
+
+    // Count up
+    const counters = document.querySelectorAll('.countup');
+    if (counters.length && 'IntersectionObserver' in window) {
+      const cObs = new IntersectionObserver((entries)=>{
+        entries.forEach((e)=>{
+          if(!e.isIntersecting) return;
+          const el = e.target;
+          const target = +el.dataset.target;
+          const dur = 900;
+          const start = performance.now();
+          const step = (now)=>{
+            const p = Math.min((now - start)/dur, 1);
+            el.textContent = Math.floor(target * p);
+            if(p < 1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+          cObs.unobserve(el);
+        });
+      }, {threshold: .6});
+      counters.forEach(c => cObs.observe(c));
+    } else { counters.forEach(c => c.textContent = c.dataset.target); }
+  </script>
+</body>
+</html>
