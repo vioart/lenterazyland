@@ -15,9 +15,9 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-app.get('/berita', (req, res) => {
-  res.render('berita')
-})
+// app.get('/berita', (req, res) => {
+//   res.render('berita')
+// })
 
 app.get('/program', (req, res) => {
   res.render('program')

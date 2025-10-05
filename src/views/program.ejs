@@ -7,6 +7,8 @@
   <title>Program • Lentera Zyland</title>
 
   <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet"/>
 
@@ -24,8 +26,6 @@
       --ink:#0b1220;
       --paper:#ffffff;
 
-      --mesh1:rgba(250,204,21,.22);
-      --mesh2:rgba(22,163,74,.14);
       --ring:rgba(22,163,74,.14);
     }
 
@@ -36,21 +36,11 @@
 
     body{ font-family:'Poppins',sans-serif; color:var(--ink); background:var(--paper); }
 
-    /* hero mesh (tanpa kolase gambar) */
+    /* hero (bersih tanpa tompel/mesh) */
     .hero{
       position:relative; isolation:isolate;
-      background:
-        radial-gradient(900px 450px at 100% -10%, var(--mesh1), transparent 60%),
-        radial-gradient(600px 350px at -10% 100%, var(--mesh2), transparent 60%);
-      /* clip dekorasi supaya tidak nambah lebar layar */
-      overflow:hidden;
+      background:#fff; /* polos */
     }
-    .blob { position:absolute; inset:0; z-index:-1; pointer-events:none; overflow:hidden; }
-    .blob::before, .blob::after{
-      content:""; position:absolute; border-radius:9999px; filter: blur(60px); opacity:.6;
-    }
-    .blob::before{ width:320px; height:320px; top:-40px; left:-40px; background:var(--secondary); }
-    .blob::after { width:380px; height:380px; bottom:-60px; right:-60px; background:#86efac; }
 
     /* micro-interactions */
     .card-hover{ transition:transform .28s ease, box-shadow .28s ease; }
@@ -82,12 +72,17 @@
     }
 
     /* Gallery */
-    /* ganti outline yang bisa menambah lebar jadi inset shadow yang tidak mengubah layout */
     .thumb-active{ outline:none; box-shadow: inset 0 0 0 3px var(--secondary), 0 0 0 1px rgba(0,0,0,.04); }
 
+    /* Reveal */
     @media (prefers-reduced-motion:no-preference){
       .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
       .reveal.show{ opacity:1; transform:translateY(0); }
+    }
+
+    /* Responsive tweaks */
+    @media (min-width: 1024px){
+      .sidebar-sticky{ position: sticky; top: 5.5rem; }
     }
   </style>
 </head>
@@ -100,14 +95,14 @@
         <!-- Branding -->
         <a href="/" class="inline-flex items-center gap-2 group" aria-label="Beranda">
           <span class="inline-block h-8 w-1.5 rounded-full" style="background:var(--secondary)"></span>
-          <span class="font-[Lobster] text-2xl leading-none text-gray-900">Lentera Zyland</span>
+          <span style="font-family:'Lobster',cursive" class="text-2xl leading-none text-gray-900">Lentera Zyland</span>
           <span class="ml-1 text-xs px-2 py-0.5 rounded-full border border-yellow-300 text-yellow-700 bg-yellow-50 hidden sm:inline-block">PKM</span>
         </a>
 
         <!-- Nav -->
         <nav class="hidden md:flex items-center gap-6">
           <a href="/" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Home</a>
-          <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a>
+          <!-- <a href="/berita" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Berita</a> -->
           <a href="/program" class="text-sm font-semibold text-gray-900 underline underline-offset-8 decoration-yellow-300">Program</a>
           <a href="/download" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Download</a>
           <a href="/tentang" class="text-sm font-medium text-gray-700 hover:text-gray-900 transition">Tentang</a>
@@ -118,14 +113,14 @@
           <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
              class="inline-flex items-center gap-2 text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition"
              aria-label="Buka Instagram Lentera Zyland">
-            <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+            <i class="fab fa-instagram text-sm opacity-90" aria-hidden="true"></i> Instagram
           </a>
         </div>
 
         <!-- Mobile menu -->
-        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
+        <button id="menuBtn" type="button" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200"
                 aria-label="Menu" aria-expanded="false" aria-controls="mobileMenu">
-          <i class="fas fa-bars"></i>
+          <i class="fas fa-bars" aria-hidden="true"></i>
         </button>
       </div>
     </div>
@@ -134,44 +129,49 @@
     <div id="mobileMenu" class="md:hidden hidden border-t border-gray-100 bg-white/95 backdrop-blur">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 grid gap-3">
         <a href="/" class="block py-2 text-gray-800 hover:text-gray-900">Home</a>
-        <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a>
+        <!-- <a href="/berita" class="block py-2 text-gray-800 hover:text-gray-900">Berita</a> -->
         <a href="/program" class="block py-2 text-gray-800 hover:text-gray-900 font-semibold underline underline-offset-8 decoration-yellow-300">Program</a>
         <a href="/download" class="block py-2 text-gray-800 hover:text-gray-900">Download</a>
         <a href="/tentang" class="block py-2 text-gray-800 hover:text-gray-900">Tentang</a>
         <a href="https://instagram.com/lenterazyland" target="_blank" rel="noopener"
            class="inline-flex items-center gap-2 justify-center text-sm font-semibold px-4 py-2 rounded-xl border border-gray-200 text-gray-800 hover:bg-gray-50 transition mt-2">
-          <i class="fab fa-instagram text-sm opacity-90"></i> Instagram
+          <i class="fab fa-instagram text-sm opacity-90" aria-hidden="true"></i> Instagram
         </a>
       </div>
     </div>
   </header>
 
-  <!-- Hero -->
-  <section class="hero py-10 sm:py-14">
-    <div class="blob"></div>
+  <!-- Peta Program -->
+  <section class="hero pt-10 sm:pt-14 pb-6 sm:pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="reveal text-center max-w-3xl mx-auto">
         <span class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full"
               style="background: rgba(22,163,74,.08); color: var(--primary); border:1px solid rgba(22,163,74,.18);">
-          <i class="fas fa-toolbox"></i> Peta Program
+          <i class="fas fa-toolbox" aria-hidden="true"></i> Peta Program
         </span>
         <h1 class="mt-3 text-2xl sm:text-3xl font-extrabold text-gray-900">Aktivitas Inklusif, Terstruktur, Seru.</h1>
         <p class="mt-2 text-gray-700">
           Jelajahi paket permainan, AR, lokakarya, dan kompetisi yang ditenagai <strong>Computational Thinking</strong>.
         </p>
         <div class="mt-4 flex flex-wrap justify-center gap-2">
-          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-cut mr-1"></i> Decomposition</span>
-          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-shapes mr-1"></i> Pattern Recognition</span>
-          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-layer-group mr-1"></i> Abstraction</span>
-          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-stream mr-1"></i> Algorithmic Thinking</span>
+          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-cut mr-1" aria-hidden="true"></i> Decomposition</span>
+          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-shapes mr-1" aria-hidden="true"></i> Pattern Recognition</span>
+          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-layer-group mr-1" aria-hidden="true"></i> Abstraction</span>
+          <span class="chip-ct inline-flex items-center text-xs px-2 py-1 rounded-md border"><i class="fas fa-stream mr-1" aria-hidden="true"></i> Algorithmic Thinking</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Spotlight -->
-  <section class="pb-4">
+  <!-- Spotlight Program (jarak rapi & heading kecil) -->
+  <section class="pt-2 pb-6 sm:pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between mb-3 sm:mb-4">
+        <div class="inline-flex items-center gap-2 text-xs font-semibold px-3 py-1 rounded-full bg-yellow-50 text-yellow-800 border border-yellow-200">
+          <i class="fas fa-bolt" aria-hidden="true"></i> Spotlight Program
+        </div>
+        <a href="#accordion" class="text-xs sm:text-sm text-primary-700 hover:underline hidden sm:inline">Lihat daftar</a>
+      </div>
       <div id="spotlight" class="reveal"></div>
     </div>
   </section>
@@ -182,27 +182,27 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <!-- Sidebar filter -->
         <aside class="lg:col-span-4">
-          <div class="sticky top-20 space-y-4">
+          <div class="sidebar-sticky space-y-4">
             <div class="bg-white p-4 rounded-2xl border border-gray-100">
               <label for="search" class="text-sm font-medium text-gray-900">Cari Program</label>
               <div class="mt-2 relative">
                 <input id="search" type="text" placeholder="mis. AR, fokus, guru..."
                   class="w-full rounded-xl border border-gray-200 px-4 py-2.5 pr-9 text-sm focus:outline-none focus:ring-2 focus:ring-yellow-200">
-                <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                <i class="fas fa-search absolute right-3 top-1/2 -translate-y-1/2 text-gray-400" aria-hidden="true"></i>
               </div>
             </div>
 
             <div class="bg-white p-4 rounded-2xl border border-gray-100">
               <div class="flex items-center justify-between">
                 <h3 class="text-sm font-medium text-gray-900">Kategori</h3>
-                <button id="resetFilters" class="text-xs underline text-gray-500">Reset</button>
+                <button id="resetFilters" type="button" class="text-xs underline text-gray-500">Reset</button>
               </div>
               <div class="mt-3 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-2 gap-2">
-                <button class="chip chip-active text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Semua">Semua</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Fun LENTERA">Fun LENTERA</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="LENTERA Focus">LENTERA Focus</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Zylearn">Zylearn</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="LENTERA Competition">Competition</button>
+                <button type="button" class="chip chip-active text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Semua">Semua</button>
+                <button type="button" class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Fun LENTERA">Fun LENTERA</button>
+                <button type="button" class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="LENTERA Focus">LENTERA Focus</button>
+                <button type="button" class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="Zylearn">Zylearn</button>
+                <button type="button" class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 text-left" data-cat="LENTERA Competition">LENTERA Competition</button>
               </div>
             </div>
 
@@ -213,12 +213,12 @@
                 <option value="az">A — Z</option>
                 <option value="za">Z — A</option>
               </select>
-              <button id="toggleAll" class="mt-3 w-full inline-flex items-center justify-center gap-2 text-sm font-semibold px-3 py-2 rounded-xl border border-gray-200 hover:bg-gray-50 transition">
-                <i class="fas fa-chevron-down chev"></i> Expand semua
+              <button id="toggleAll" type="button" class="mt-3 w-full inline-flex items-center justify-center gap-2 text-sm font-semibold px-3 py-2 rounded-xl border border-gray-200 hover:bg-gray-50 transition">
+                <i class="fas fa-chevron-down chev" aria-hidden="true"></i> Expand semua
               </button>
             </div>
 
-            <div class="text-sm text-gray-500"><span id="resultCount">0</span> program ditampilkan</div>
+            <div class="text-sm text-gray-500"><span id="resultCount" aria-live="polite">0</span> program ditampilkan</div>
           </div>
         </aside>
 
@@ -231,23 +231,23 @@
   </main>
 
   <!-- Footer -->
-  <footer class="border-top border-gray-100 bg-white border-t">
+  <footer class="border-t border-gray-100 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="py-10 grid grid-cols-1 sm:grid-cols-3 gap-8">
         <div class="reveal show">
           <h3 class="font-semibold text-gray-900">Lentera Zyland</h3>
           <p class="mt-2 text-sm text-gray-600">Inovasi pembelajaran inklusif melalui game edukasi berlandaskan Computational Thinking</p>
           <div class="mt-3 flex items-center gap-3 text-gray-500">
-            <a href="#" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/lenterazyland" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+            <a href="https://www.youtube.com/@PKM-PMLenteraZyland" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            <a href="https://www.tiktok.com/@pkmpm.lenterazyland" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
           </div>
         </div>
         <div class="reveal show">
           <h4 class="font-semibold text-gray-900">Navigasi</h4>
           <ul class="mt-2 text-sm text-gray-600 space-y-1">
             <li><a href="/" class="hover:text-gray-900">Home</a></li>
-            <li><a href="/berita" class="hover:text-gray-900">Berita</a></li>
+            <!-- <li><a href="/berita" class="hover:text-gray-900">Berita</a></li> -->
             <li><a href="/program" class="hover:text-gray-900">Program</a></li>
             <li><a href="/download" class="hover:text-gray-900">Download</a></li>
             <li><a href="/tentang" class="hover:text-gray-900">Tentang</a></li>
@@ -256,7 +256,7 @@
         <div class="reveal show">
           <h4 class="font-semibold text-gray-900">Kontak</h4>
           <ul class="mt-2 text-sm text-gray-600 space-y-1">
-            <li>Email: <a href="mailto:lenterazyland1@gmail.com" class="underline">lenterazyland1@gmail.com</a></li>
+            <li>Email: <a href="mailto:lenterazyland1@gmail.com">lenterazyland1@gmail.com</a></li>
             <li>Alamat: Surakarta</li>
           </ul>
         </div>
@@ -283,70 +283,133 @@
       });
     }
 
-    // ===== Data Program (pakai multi-gambar) =====
+    // ===== Data Program (granular per sub-program) =====
     const PROGRAMS = [
+      // === Fun LENTERA (4 item) ===
       {
-        id:"fun-lentera",
-        title:"Fun LENTERA",
+        id:"fun-number-board",
+        title:"Number Board",
         category:"Fun LENTERA",
-        audience:["Siswa SD", "Slow Learner"],
-        excerpt:"Paket permainan AR, Number Board, dan Book Storytime untuk literasi & numerasi yang menyenangkan.",
-        ct:["Decomposition","Pattern Recognition","Abstraction","Algorithmic Thinking"],
+        audience:["Siswa SD","Slow Learner"],
+        excerpt:"Latihan berhitung bertahap, urutan, dan pola bilangan secara menyenangkan.",
+        ct:["Pattern Recognition","Algorithmic Thinking"],
         points:[
-          "AR (Zymath AR) untuk eksplorasi konsep spasial & numerik",
-          "Number Board: latihan berhitung bertahap & pengenalan pola",
-          "Book Storytime: kosakata & pemahaman membaca"
+          "Board bertingkat: dari pengenalan angka ke operasi sederhana",
+          "Memperkuat konsep urutan & pola (skip counting)"
         ],
-        images:["/img/gambar.jpg","/img/gambar.jpg","/img/gambar.jpg"],
-        image:"/img/gambar.jpg",
-        featured:true
-      },
-      {
-        id:"lentera-focus",
-        title:"LENTERA Focus",
-        category:"LENTERA Focus",
-        audience:["Siswa SD","Remedial/Intervensi"],
-        excerpt:"Latih atensi, kontrol impuls, dan kerja sama melalui permainan terstruktur.",
-        ct:["Algorithmic Thinking","Decomposition"],
-        points:[
-          "Permainan aturan bertingkat (level up) untuk ketekunan",
-          "Aktivitas berpasangan & tim—kolaborasi & komunikasi",
-          "Refleksi singkat di akhir sesi (metakognisi)"
-        ],
-        images:["/img/gambar.jpg","/img/gambar.jpg"],
-        image:"/img/gambar.jpg",
-        featured:true
-      },
-      {
-        id:"zylearn",
-        title:"Zylearn",
-        category:"Zylearn",
-        audience:["Guru","Orang Tua"],
-        excerpt:"Lokakarya untuk mengadopsi CT dalam pembelajaran & pendampingan anak di rumah.",
-        ct:["Decomposition","Pattern Recognition","Abstraction","Algorithmic Thinking"],
-        points:[
-          "Template aktivitas CT siap pakai untuk kelas/rumah",
-          "Strategi diferensiasi untuk kebutuhan beragam",
-          "Sesi praktik & micro-teaching"
-        ],
-        images:["/img/gambar.jpg","/img/gambar.jpg","/img/gambar.jpg","/img/gambar.jpg"],
-        image:"/img/gambar.jpg",
+        images:["/img/fun-number-board-1.jpg","/img/fun-number-board-2.jpg"],
+        image:"/img/fun-number-board-1.jpg",
         featured:false
       },
       {
-        id:"lentera-competition",
+        id:"fun-book-storytime",
+        title:"Book Storytime",
+        category:"Fun LENTERA",
+        audience:["Siswa SD","Slow Learner"],
+        excerpt:"Penguatan literasi: kosa kata, pemahaman bacaan, dan storytelling terpandu.",
+        ct:["Abstraction","Decomposition"],
+        points:[
+          "Menyederhanakan alur cerita (tokoh, tempat, masalah, solusi)",
+          "Aktivitas tanya-jawab & menceritakan kembali (retelling)"
+        ],
+        images:["/img/fun-storytime-1.jpg","/img/fun-storytime-2.jpg"],
+        image:"/img/fun-storytime-1.jpg",
+        featured:false
+      },
+      {
+        id:"fun-find-word-number",
+        title:"Find Word and Number",
+        category:"Fun LENTERA",
+        audience:["Siswa SD","Slow Learner"],
+        excerpt:"Permainan mencari kata/angka untuk melatih fokus, memori kerja, dan pencocokan pola.",
+        ct:["Pattern Recognition"],
+        points:[
+          "Teka-teki huruf/angka dengan tingkat kesulitan bertahap",
+          "Melatih atensi selektif & pemindaian visual"
+        ],
+        images:["/img/fun-find-1.jpg","/img/fun-find-2.jpg"],
+        image:"/img/fun-find-1.jpg",
+        featured:false
+      },
+      {
+        id:"fun-zyland-game",
+        title:"ZYLAND – Game Edukasi",
+        category:"Fun LENTERA",
+        audience:["Siswa SD","Slow Learner"],
+        excerpt:"Petualangan interaktif dengan misi CT per level (dekomposisi, pola, algoritma).",
+        ct:["Decomposition","Algorithmic Thinking","Pattern Recognition"],
+        points:[
+          "Quest & checkpoint yang memandu langkah-langkah pemecahan masalah",
+          "Umpan balik instan & progres yang bisa dilacak"
+        ],
+        images:["/img/zyland.jpg","/img/game-zyland/gambar1.jpg","/img/game-zyland/gambar1.jpg"],
+        image:"/img/fun-zyland-1.jpg",
+        featured:true   // highlight default
+      },
+
+      // === LENTERA Focus (2 item) ===
+      {
+        id:"focus-tower",
+        title:"Menara Focus",
+        category:"LENTERA Focus",
+        audience:["Siswa SD","Remedial/Intervensi"],
+        excerpt:"Aktivitas stacking/menara bertingkat untuk atensi berkelanjutan & kontrol impuls.",
+        ct:["Algorithmic Thinking","Decomposition"],
+        points:[
+          "Aturan sederhana → kompleks (level up)",
+          "Refleksi singkat pasca aktivitas (metakognisi)"
+        ],
+        images:["/img/focus-tower-1.jpg","/img/focus-tower-2.jpg"],
+        image:"/img/focus-tower-1.jpg",
+        featured:false
+      },
+      {
+        id:"focus-teams-tournament",
+        title:"Teams Tournament Number and Words",
+        category:"LENTERA Focus",
+        audience:["Siswa SD"],
+        excerpt:"Turnamen tim angka & kata untuk kolaborasi, strategi, dan regulasi diri.",
+        ct:["Algorithmic Thinking","Pattern Recognition"],
+        points:[
+          "Format gim tim dengan skor & putaran",
+          "Melatih komunikasi & pengambilan keputusan"
+        ],
+        images:["/img/focus-tournament-1.jpg","/img/focus-tournament-2.jpg"],
+        image:"/img/focus-tournament-1.jpg",
+        featured:false
+      },
+
+      // === Zylearn (1 item) ===
+      {
+        id:"zylearn-training",
+        title:"Zylearn — Pelatihan Guru",
+        category:"Zylearn",
+        audience:["Guru","Orang Tua"],
+        excerpt:"Pelatihan adopsi Computational Thinking di kelas & rumah.",
+        ct:["Decomposition","Pattern Recognition","Abstraction","Algorithmic Thinking"],
+        points:[
+          "Template aktivitas CT & diferensiasi pembelajaran",
+          "Micro-teaching & pendampingan implementasi"
+        ],
+        images:["/img/zylearn-1.jpg","/img/zylearn-2.jpg","/img/zylearn-3.jpg"],
+        image:"/img/zylearn-1.jpg",
+        featured:false
+      },
+
+      // === LENTERA Competition (1 item) ===
+      {
+        id:"competition-main",
         title:"LENTERA Competition",
         category:"LENTERA Competition",
         audience:["Siswa SD","Komunitas"],
-        excerpt:"Apresiasi capaian melalui lomba mini bertema CT & numerasi.",
+        excerpt:"Event kompetisi untuk mengapresiasi capaian CT & numerasi.",
         ct:["Algorithmic Thinking","Pattern Recognition"],
         points:[
-          "Tantangan berbasis misi (checkpoints) & rubrik penilaian",
-          "Booth demo AR & portofolio karya siswa",
-          "Penghargaan & umpan balik yang memotivasi"
+          "Misi dengan rubrik penilaian transparan",
+          "Showcase portofolio & demo AR + penghargaan"
         ],
-        images:["/img/gambar.jpg","/img/gambar.jpg"],
-        image:"/img/gambar.jpg",
+        images:["/img/competition-1.jpg","/img/competition-2.jpg"],
+        image:"/img/competition-1.jpg",
         featured:false
       }
     ];
@@ -379,28 +442,34 @@
 
     const ctBadge = (name) =>
       `<span class="inline-flex items-center text-xs px-2 py-1 rounded-md bg-gray-50 border border-gray-200 text-gray-700">
-        <i class="${ctIcon[name]||''} mr-1"></i>${name}
+        <i class="${ctIcon[name]||''} mr-1" aria-hidden="true"></i>${name}
       </span>`;
 
     // ===== State =====
     let state = { q:"", cat:"Semua", sort:"featured", expanded:false };
     const galleryIndex = {}; // { [id]: number }
 
-    // ===== Spotlight render =====
+    // ===== Spotlight render (prioritaskan Zyland) =====
     function renderSpotlight(list=PROGRAMS){
-      const item = (list.find(p=>p.featured) || list[0]);
+      const zyDefault = PROGRAMS.find(p => p.id === 'fun-zyland-game');
+      const item = (list.find(p => p.id === 'fun-zyland-game')) || zyDefault || (list.find(p=>p.featured) || list[0]);
+
       if(!item){ spotlight.innerHTML = ""; return; }
       const cover = (item.images && item.images[0]) || item.image;
       spotlight.innerHTML = `
         <article class="rounded-3xl overflow-hidden border border-gray-100 shadow-sm card-hover relative">
           <div class="absolute inset-0" aria-hidden="true"
                style="background: linear-gradient(to right, rgba(0,0,0,.55), rgba(0,0,0,.15)); z-index:1;"></div>
-          <img src="${cover}" alt="${item.title}" class="w-full h-64 sm:h-80 object-cover"/>
+          <img src="${cover}" alt="${item.title}" loading="lazy" decoding="async" width="1280" height="720"
+               class="w-full h-56 sm:h-64 md:h-72 lg:h-80 xl:h-[22rem] object-cover"/>
           <div class="absolute inset-0 z-10 flex items-end">
-            <div class="p-6 sm:p-8 text-white max-w-3xl">
+            <div class="p-4 sm:p-6 md:p-8 text-white max-w-3xl">
               <div class="flex items-center gap-2 text-xs">
                 <span class="inline-flex items-center gap-2 px-2 py-1 rounded-md bg-white/15 backdrop-blur border border-white/20">
-                  <i class="${iconByCat[item.category]||'fas fa-layer-group'}"></i> ${item.category}
+                  <i class="${iconByCat[item.category]||'fas fa-layer-group'}" aria-hidden="true"></i> ${item.category}
+                </span>
+                <span class="inline-flex items-center gap-2 px-2 py-1 rounded-md bg-yellow-400/90 text-gray-900 font-semibold">
+                  <i class="fas fa-star" aria-hidden="true"></i> Highlight
                 </span>
               </div>
               <h2 class="mt-2 text-2xl sm:text-3xl font-extrabold">${item.title}</h2>
@@ -454,7 +523,9 @@
       hero.setAttribute('src', data.images[current]);
 
       container.querySelectorAll('.gal-thumb').forEach((btn, i)=>{
-        btn.classList.toggle('thumb-active', i===current);
+        const active = i===current;
+        btn.classList.toggle('thumb-active', active);
+        btn.setAttribute('aria-current', active ? 'true' : 'false');
       });
     }
 
@@ -466,7 +537,7 @@
       if(!items.length){
         accordion.innerHTML = `
           <div class="mt-6 text-center text-gray-500">
-            <i class="fas fa-puzzle-piece text-3xl mb-3"></i>
+            <i class="fas fa-puzzle-piece text-3xl mb-3" aria-hidden="true"></i>
             <p>Tidak ada program yang cocok dengan pencarian/filters.</p>
           </div>
         `;
@@ -486,7 +557,7 @@
             <div class="flex items-start gap-3 p-4 sm:p-5">
               <div class="shrink-0 w-10 h-10 grid place-content-center rounded-lg"
                    style="background: rgba(250,204,21,0.25);">
-                <i class="${iconByCat[p.category]||'fas fa-layer-group'} text-yellow-600"></i>
+                <i class="${iconByCat[p.category]||'fas fa-layer-group'} text-yellow-600" aria-hidden="true"></i>
               </div>
               <div class="flex-1 min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
@@ -495,7 +566,7 @@
                 <h3 class="mt-1 font-semibold text-gray-900 text-base sm:text-lg">${p.title}</h3>
                 <p class="mt-1 text-sm text-gray-600">${p.excerpt}</p>
               </div>
-              <i class="fas fa-chevron-down chev text-gray-400 mt-1"></i>
+              <i class="fas fa-chevron-down chev text-gray-400 mt-1" aria-hidden="true"></i>
             </div>
           </summary>
 
@@ -514,19 +585,20 @@
             <!-- GALERI BESAR -->
             <div id="gal-${p.id}" class="mt-5">
               <div class="relative rounded-2xl overflow-hidden border border-gray-100">
-                <img src="${cover}" alt="${p.title}" class="gal-hero w-full h-80 sm:h-[26rem] object-cover"/>
-                <button class="gal-prev absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition" aria-label="Sebelumnya" data-id="${p.id}">
-                  <i class="fas fa-chevron-left"></i>
+                <img src="${cover}" alt="${p.title}" loading="lazy" decoding="async" width="1280" height="720"
+                     class="gal-hero w-full h-56 sm:h-64 md:h-72 lg:h-[26rem] object-cover"/>
+                <button type="button" class="gal-prev absolute left-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition" aria-label="Sebelumnya" data-id="${p.id}">
+                  <i class="fas fa-chevron-left" aria-hidden="true"></i>
                 </button>
-                <button class="gal-next absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition" aria-label="Berikutnya" data-id="${p.id}">
-                  <i class="fas fa-chevron-right"></i>
+                <button type="button" class="gal-next absolute right-3 top-1/2 -translate-y-1/2 inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/90 border border-gray-200 shadow-sm hover:bg-white transition" aria-label="Berikutnya" data-id="${p.id}">
+                  <i class="fas fa-chevron-right" aria-hidden="true"></i>
                 </button>
               </div>
               <!-- Thumbnails -->
               <div class="mt-3 flex gap-2 overflow-x-auto">
                 ${p.images.map((src, i)=>`
-                  <button class="gal-thumb ${i===0?'thumb-active':''} shrink-0 rounded-xl overflow-hidden border border-gray-200" data-idx="${i}" data-id="${p.id}" aria-label="Gambar ${i+1}">
-                    <img src="${src}" alt="Thumb ${i+1} ${p.title}" class="h-16 w-24 object-cover"/>
+                  <button type="button" class="gal-thumb ${i===0?'thumb-active':''} shrink-0 rounded-xl overflow-hidden border border-gray-200" data-idx="${i}" data-id="${p.id}" aria-label="Gambar ${i+1}">
+                    <img src="${src}" alt="Thumb ${i+1} ${p.title}" loading="lazy" decoding="async" width="240" height="160" class="h-16 w-24 object-cover" draggable="false"/>
                   </button>
                 `).join('')}
               </div>
@@ -537,8 +609,8 @@
 
       $$('.program', accordion).forEach(d => d.open = state.expanded);
       toggleAllBtn.innerHTML = state.expanded
-        ? '<i class="fas fa-chevron-up chev"></i> Collapse semua'
-        : '<i class="fas fa-chevron-down chev"></i> Expand semua';
+        ? '<i class="fas fa-chevron-up chev" aria-hidden="true"></i> Collapse semua'
+        : '<i class="fas fa-chevron-down chev" aria-hidden="true"></i> Expand semua';
     }
 
     // ===== Events =====
@@ -578,8 +650,8 @@
       state.expanded = !state.expanded;
       $$('.program', accordion).forEach(d => d.open = state.expanded);
       toggleAllBtn.innerHTML = state.expanded
-        ? '<i class="fas fa-chevron-up chev"></i> Collapse semua'
-        : '<i class="fas fa-chevron-down chev"></i> Expand semua';
+        ? '<i class="fas fa-chevron-up chev" aria-hidden="true"></i> Collapse semua'
+        : '<i class="fas fa-chevron-down chev" aria-hidden="true"></i> Expand semua';
     });
 
     // Gallery controls
@@ -620,8 +692,23 @@
       if(e.key === 'ArrowRight') updateGallery(id, (galleryIndex[id]||0) + 1);
     });
 
-    // Reveal on load
-    $$('.reveal').forEach(el => el.classList.add('show'));
+    // Reveal on scroll (IntersectionObserver)
+    (function(){
+      const els = $$('.reveal');
+      if (!('IntersectionObserver' in window) || !els.length) {
+        els.forEach(el => el.classList.add('show'));
+        return;
+      }
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('show');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+      els.forEach(el => io.observe(el));
+    })();
 
     // First render
     renderAccordion();

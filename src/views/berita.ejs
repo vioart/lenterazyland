@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="Daftar berita Lentera Zyland: rilis, kegiatan, pelatihan, dan liputan terbaru."/>
+  <meta name="description" content="Daftar berita Lentera Zyland: koordinasi, sosialisasi, pelaksanaan kelas, teknologi, dan pembaruan terbaru."/>
   <title>Berita • Lentera Zyland</title>
 
   <!-- Fonts -->
@@ -19,7 +19,6 @@
   <style>
     :root{
       --primary:#16a34a; /* hijau */
-      --primary-700:#15803d;
       --secondary:#facc15; /* kuning */
       --ink:#0b1220;
       --paper:#ffffff;
@@ -115,10 +114,10 @@
       <div class="reveal show flex flex-col gap-6">
         <div>
           <h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900">Semua Berita</h1>
-          <p class="mt-1 text-gray-600">Kabar rilis, kegiatan, pelatihan, dan liputan terbaru dari Lentera Zyland.</p>
+          <p class="mt-1 text-gray-600">Perkembangan program: koordinasi, sosialisasi, pelaksanaan kelas, serta inovasi teknologi Lentera Zyland.</p>
         </div>
 
-        <!-- ✅ Controls: responsif & tidak nabrak -->
+        <!-- Controls -->
         <div class="w-full grid grid-cols-1 md:grid-cols-12 gap-3 md:items-end">
           <!-- Search -->
           <div class="relative md:col-span-4">
@@ -132,13 +131,15 @@
             <div class="hide-scrollbar overflow-x-auto whitespace-nowrap -mx-1 px-1">
               <div class="inline-flex items-center gap-2">
                 <button class="chip chip-active text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Semua">Semua</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Rilis">Rilis</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Kegiatan">Kegiatan</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Koordinasi">Koordinasi</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Sosialisasi">Sosialisasi</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Assessment">Assessment</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Pembelajaran">Pembelajaran</button>
                 <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Pelatihan">Pelatihan</button>
-                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Update">Update</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Administrasi">Administrasi</button>
+                <button class="chip text-xs px-3 py-2 rounded-lg border border-gray-200 whitespace-nowrap" data-cat="Teknologi">Teknologi</button>
               </div>
             </div>
-            <!-- fade kanan sebagai hint scroll -->
             <div class="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent hidden md:block"></div>
           </div>
 
@@ -184,9 +185,9 @@
           <h3 class="font-semibold text-gray-900">Lentera Zyland</h3>
           <p class="mt-2 text-sm text-gray-600">Inovasi pembelajaran inklusif melalui game edukasi berlandaskan Computational Thinking</p>
           <div class="mt-3 flex items-center gap-3 text-gray-500">
-            <a href="#" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-            <a href="#" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
-            <a href="#" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.instagram.com/lenterazyland" class="hover:text-gray-800" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://www.youtube.com/@PKM-PMLenteraZyland" class="hover:text-gray-800" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.tiktok.com/@pkmpm.lenterazyland" class="hover:text-gray-800" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
           </div>
         </div>
         <div class="reveal show">
@@ -202,7 +203,7 @@
         <div class="reveal show">
           <h4 class="font-semibold text-gray-900">Kontak</h4>
           <ul class="mt-2 text-sm text-gray-600 space-y-1">
-            <li>Email: <a href="mailto:lenterazyland1@gmail.com" class="underline">lenterazyland1@gmail.com</a></li>
+            <li>Email: <a href="mailto:lenterazyland1@gmail.com">lenterazyland1@gmail.com</a></li>
             <li>Alamat: Surakarta</li>
           </ul>
         </div>
@@ -229,17 +230,128 @@
       });
     }
 
-    // Data berita (dummy, ganti sesuai data asli)
+    // =======================
+    // DATA BERITA (revisi)
+    // =======================
+    // NOTE: Ganti 'image' ke foto asli jika sudah ada.
     const NEWS = [
-      { title:"Rilis Zymath AR 1.2.0", date:"2025-09-28", category:"Rilis", excerpt:"Tracking lebih stabil, aset 3D lebih ringan, dan optimasi kinerja.", image:"/img/gambar.jpg", slug:"rilis-zymath-ar-120" },
-      { title:"Workshop Zylearn untuk Guru", date:"2025-09-20", category:"Pelatihan", excerpt:"Penguatan praktik CT dan integrasi numerasi di kelas.", image:"/img/gambar.jpg", slug:"workshop-zylearn" },
-      { title:"Fun LENTERA di SD Mitra", date:"2025-09-05", category:"Kegiatan", excerpt:"Belajar numerasi kolaboratif melalui permainan edukatif.", image:"/img/gambar.jpg", slug:"fun-lentera-sd-mitra" },
-      { title:"Zyland (PC) Build Publik", date:"2025-08-29", category:"Rilis", excerpt:"Build Windows/PC untuk uji coba awal integrasi Computational Thinking.", image:"/img/gambar.jpg", slug:"zyland-pc-build-publik" },
-      { title:"Integrasi CT pada Number Board", date:"2025-08-11", category:"Update", excerpt:"Memperkenalkan pola dekomposisi dan pengenalan pola untuk aktivitas numerasi.", image:"/img/gambar.jpg", slug:"integrasi-ct-number-board" },
-      { title:"Pelatihan Orang Tua: Learning at Home", date:"2025-07-22", category:"Pelatihan", excerpt:"Tips sederhana menerapkan CT di rumah untuk mendukung literasi & numerasi.", image:"/img/gambar.jpg", slug:"pelatihan-orang-tua-learning-at-home" },
-      { title:"Kunjungan Media ke Lentera Zyland", date:"2025-07-06", category:"Kegiatan", excerpt:"Liputan kegiatan dan demo AR oleh siswa-siswi.", image:"/img/gambar.jpg", slug:"kunjungan-media-lentera-zyland" },
-      { title:"Patch Performa Zymath AR", date:"2025-06-18", category:"Update", excerpt:"Peningkatan FPS dan penurunan latency pada perangkat low-end.", image:"/img/gambar.jpg", slug:"patch-performa-zymath-ar" },
-      { title:"Mini Competition: CT Challenge", date:"2025-06-02", category:"Kegiatan", excerpt:"Siswa memecahkan tantangan dengan berpikir komputasional.", image:"/img/gambar.jpg", slug:"mini-competition-ct-challenge" }
+      // Koordinasi (awal rangkaian)
+      {
+        title:"Koordinasi & Pembekalan Internal Biromawa",
+        date:"2025-02-05",
+        category:"Koordinasi",
+        excerpt:"Penyamaan visi, timeline, dan SOP pelaporan untuk kelancaran Program Lentera Zyland.",
+        image:"/img/berita-biromawa.jpg",
+        slug:"koordinasi-dan-pembekalan-internal-biromawa"
+      },
+      {
+        title:"Koordinasi dengan Kepala Sekolah SDN Wiropaten",
+        date:"2025-02-12",
+        category:"Koordinasi",
+        excerpt:"Pemetaan kebutuhan sekolah, penjadwalan sesi, serta penunjukan guru pengampu.",
+        image:"/img/berita-koordinasi-sekolah.jpg",
+        slug:"koordinasi-dengan-kepala-sekolah-sdn-wiropaten"
+      },
+
+      // Sosialisasi
+      {
+        title:"Sosialisasi Program ke Guru SDN Wiropaten Surakarta",
+        date:"2025-02-20",
+        category:"Sosialisasi",
+        excerpt:"Pengenalan konsep Computational Thinking, alur program, dan peran guru di kelas.",
+        image:"/img/berita-sosialisasi-guru.jpg",
+        slug:"sosialisasi-program-ke-guru-sdn-wiropaten"
+      },
+      {
+        title:"Sosialisasi Wali Murid & Penyerahan Modul Monitoring",
+        date:"2025-03-02",
+        category:"Sosialisasi",
+        excerpt:"Menghubungkan rumah–sekolah melalui modul pantau perkembangan literasi & numerasi.",
+        image:"/img/berita-sosialisasi-walimurid.jpg",
+        slug:"sosialisasi-wali-murid-dan-penyerahan-modul-monitoring"
+      },
+
+      // Administrasi / Legal
+      {
+        title:"Persetujuan Wali Murid untuk Publikasi",
+        date:"2025-03-03",
+        category:"Administrasi",
+        excerpt:"Pengumpulan informed consent publikasi foto/video kegiatan pembelajaran.",
+        image:"/img/berita-consent.jpg",
+        slug:"persetujuan-wali-murid-untuk-publikasi"
+      },
+
+      // Assessment (baseline)
+      {
+        title:"Pelaksanaan Pretest",
+        date:"2025-03-05",
+        category:"Assessment",
+        excerpt:"Pengukuran awal (baseline) literasi, numerasi, dan atensi sebagai dasar intervensi.",
+        image:"/img/berita-pretest.jpg",
+        slug:"pelaksanaan-pretest"
+      },
+
+      // Pelatihan/Pendampingan eksternal
+      {
+        title:"Pendampingan PKM PTMA Tahun 2025",
+        date:"2025-03-10",
+        category:"Pelatihan",
+        excerpt:"Klinik proposal, asistensi administrasi, dan strategi monitoring dampak kegiatan.",
+        image:"/img/berita-pkm-ptma.jpg",
+        slug:"pendampingan-pkm-ptma-2025"
+      },
+
+      // Pembelajaran (implementasi di kelas)
+      {
+        title:"Sesi Menara Focus",
+        date:"2025-03-15",
+        category:"Pembelajaran",
+        excerpt:"Latihan atensi berkelanjutan, kontrol impuls, dan kerja sama melalui Menara Focus.",
+        image:"/img/berita-menara-focus.jpg",
+        slug:"sesi-menara-focus"
+      },
+      {
+        title:"Number Board di Kelas",
+        date:"2025-03-18",
+        category:"Pembelajaran",
+        excerpt:"Menguatkan urutan, pola, dan operasi sederhana dengan papan angka bertingkat.",
+        image:"/img/berita-number-board.jpg",
+        slug:"number-board-di-kelas"
+      },
+      {
+        title:"Book Story Time",
+        date:"2025-03-20",
+        category:"Pembelajaran",
+        excerpt:"Membangun kosa kata dan pemahaman bacaan melalui sesi membaca terpandu.",
+        image:"/img/berita-storytime.jpg",
+        slug:"book-story-time"
+      },
+      {
+        title:"Find Word & Number",
+        date:"2025-03-22",
+        category:"Pembelajaran",
+        excerpt:"Gim mencari kata/angka untuk melatih fokus visual dan pencocokan pola.",
+        image:"/img/berita-find-word-number.jpg",
+        slug:"find-word-dan-number"
+      },
+      {
+        title:"Game Zyland di SDN Wiropaten",
+        date:"2025-03-25",
+        category:"Pembelajaran",
+        excerpt:"Petualangan edukasi bertema Computational Thinking dengan misi per level.",
+        image:"/img/berita-game-zyland.jpg",
+        slug:"game-zyland-di-sdn-wiropaten"
+      },
+
+      // Teknologi
+      {
+        title:"Penerapan Zymath AR dalam Pembelajaran",
+        date:"2025-03-28",
+        category:"Teknologi",
+        excerpt:"Uji coba marker, kalibrasi perangkat, dan integrasi Zymath AR ke lembar kerja.",
+        image:"/img/berita-zymath-ar.jpg",
+        slug:"penerapan-zymath-ar"
+      }
     ];
 
     // Helpers
